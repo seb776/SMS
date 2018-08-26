@@ -9,5 +9,5 @@ protected:
 public:
 
 	AWin32Window(HINSTANCE hInstance);
-	virtual ~AWin32Window(void);
+	~AWin32Window(void);
 };

@@ -21,6 +21,12 @@
     <Filter Include="Header Files\Window">
       <UniqueIdentifier>{386d0f9d-b00c-4daa-b2cc-be005ca18a96}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\ShaderBuilt">
+      <UniqueIdentifier>{0bcd9269-b3b4-4b37-9a4e-6a44e6d15166}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Shaders">
+      <UniqueIdentifier>{c02afee1-cc2a-4f86-b409-48522078122d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -28,9 +34,6 @@
     </ClInclude>
     <ClInclude Include="SMS.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Memory\Memory.h">
-      <Filter>Header Files\Tools</Filter>
     </ClInclude>
     <ClInclude Include="Window\AWin32Window.h">
       <Filter>Header Files\Window</Filter>
@@ -41,13 +44,22 @@
     <ClInclude Include="Tools\MeanLeanWindows.h">
       <Filter>Header Files\Tools</Filter>
     </ClInclude>
+    <ClInclude Include="Tools\FragmentShader.h">
+      <Filter>Header Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Tools\Memory.h">
+      <Filter>Header Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderBuilt\ShaderBuilt.h">
+      <Filter>Header Files\ShaderBuilt</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SMS.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Window\Memory.cpp">
-      <Filter>Source Files\Tools</Filter>
     </ClCompile>
     <ClCompile Include="Window\ParametersWindow.cpp">
       <Filter>Source Files\Window</Filter>
@@ -55,5 +67,25 @@
     <ClCompile Include="Window\AWin32Window.cpp">
       <Filter>Source Files\Window</Filter>
     </ClCompile>
+    <ClCompile Include="Tools\FragmentShader.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Tools\Memory.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderBuilt\ShaderBuilt.cpp">
+      <Filter>Header Files\ShaderBuilt</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="SMS.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders\Shader2.glsl">
+      <Filter>Header Files\Shaders</Filter>
+    </None>
+    <None Include="Shaders\ShaderTest.glsl">
+      <Filter>Header Files\Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

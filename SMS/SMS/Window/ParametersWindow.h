@@ -17,5 +17,5 @@ public:
 
 	static LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
-	virtual ~ParametersWindow(void) override;
+	~ParametersWindow(void);
 };

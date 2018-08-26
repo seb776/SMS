@@ -4,6 +4,8 @@
 
 HWND ParametersWindow::g_hWndBtn;
 
+void CreateOpenGLFullScreen(int width, int height);
+
 LRESULT CALLBACK ParametersWindow::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	switch (msg)
@@ -19,7 +21,7 @@ LRESULT CALLBACK ParametersWindow::WndProc(HWND hwnd, UINT msg, WPARAM wParam, L
 			if ((HWND)lParam == g_hWndBtn)
 			{
 				MessageBox(hwnd, "Button was clicked", "OK", MB_OK);
-				//CreateOpenGLFullScreen(1280, 720);
+				CreateOpenGLFullScreen(1280, 720);
 			}
 			break;
 		}
