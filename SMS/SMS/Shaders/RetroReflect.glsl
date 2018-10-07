@@ -1,3 +1,6 @@
+layout(location = 0) uniform float iGlobalTime;
+layout(location = 1) uniform vec2 iResolution;
+
 vec3 topColor = vec3(0.945, 0.694, 0.274);
 vec3 downColor = vec3(0.945, 0.274, 0.654);
 float sunSize= 0.4;
@@ -10,6 +13,7 @@ int marchStep = 512;
 float marchDist = 200.0;
 
 float EPSILON = 0.00001;
+
 
 vec3 colorlerp(vec3 a, vec3 b, float c)
 {
@@ -63,14 +67,15 @@ vec3 renderSun(float vCenter, float ratio, vec2 uvRatio)
 }
 
 void main(void) {
-	vec2 uv = gl_FragCoord.xy / iResolution.xy;
-  float ratio = iResolution.y/ iResolution.x;
-  float vCenter = 0.5 * ratio + sin(iGlobalTime) *0.2;
+	vec2 myRes = vec2(1024.0,768.0);
+	vec2 uv = gl_FragCoord.xy / myRes.xy;
+  float ratio = myRes.y/ myRes.x;
+  float vCenter = 0.5 * ratio + sin(0.0) *0.2;
   vec2 uvRatio = vec2(uv.x, uv.y * ratio);
 
   vec3 origin = vec3(0.0,10.0,-50.0);
   float yaw = 0.0;
-    float pitch = 3.1415/2.0 + sin(iGlobalTime) *0.1;
+    float pitch = 3.1415/2.0 + sin(0.0) *0.1;
 
     float cosYaw = cos(yaw);
     float sinYaw = sin(yaw);
@@ -89,14 +94,14 @@ void main(void) {
 
     float fov = 1.5;
     vec2 centeredUv = uv.xy - vec2(0.5,0.5);
-    centeredUv.y = centeredUv.y * (iResolution.y / iResolution.x);
+    centeredUv.y = centeredUv.y * (768.0 / 1024.0);
     centeredUv *= fov;
     vec += centeredUv.x * rightVec + centeredUv.y * upVec;
 	vec = rotY * (rotZ * vec);
 	vec= normalize(vec);
 
 
-	planes[0].pos = vec3(0.0, -abs(cos(iGlobalTime)) * 5.0 + 2.0, 0.0);
+	planes[0].pos = vec3(0.0, -abs(cos(0.0)) * 5.0 + 2.0, 0.0);
 	planes[0].normal = vec3(0.0,1.0,0.0);
   planes[0].fwd = vec3(0.0,0.0,1.0);
   planes[0].col= vec3(1.0,0.0,0.0);

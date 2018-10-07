@@ -76,6 +76,9 @@
     <ClCompile Include="ShaderBuilt\ShaderBuilt.cpp">
       <Filter>Header Files\ShaderBuilt</Filter>
     </ClCompile>
+    <ClCompile Include="Tools\FltUsed.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="SMS.rc" />
@@ -85,6 +88,9 @@
       <Filter>Header Files\Shaders</Filter>
     </None>
     <None Include="Shaders\ShaderTest.glsl">
+      <Filter>Header Files\Shaders</Filter>
+    </None>
+    <None Include="Shaders\RetroReflect.glsl">
       <Filter>Header Files\Shaders</Filter>
     </None>
   </ItemGroup>

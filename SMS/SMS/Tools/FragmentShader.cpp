@@ -31,9 +31,26 @@ bool FragmentShader::Load(const char *path, bool isPath) {
 
 
 
-int FragmentShader::Run() {
-	const int t = ((PFNGLCREATESHADERPROGRAMEXTPROC)wglGetProcAddress("glCreateShaderProgramEXT"))(GL_FRAGMENT_SHADER, _shaderCode);
+unsigned int FragmentShader::Run() {
+	const unsigned int t = glCreateShaderProgramEXT(GL_FRAGMENT_SHADER, _shaderCode);
+	GLint status = 0;
+	glGetShaderiv(t, GL_COMPILE_STATUS, &status);
+	if (status == GL_FALSE)
+	{
+		GLenum errCode;
+		const GLubyte *errString;
+		if ((errCode = glGetError()) !=
+			GL_NO_ERROR)
+		{
+			errString = glGetString(errCode);
+		}
+		//glGetShaderInfoLog()
+		return 0;
+	}
+	//const unsigned int t = ((PFNGLCREATESHADERPROGRAMEXTPROC)wglGetProcAddress("glCreateShaderProgramEXT"))(GL_FRAGMENT_SHADER, _shaderCode);
+
 	((PFNGLUSEPROGRAMPROC)wglGetProcAddress("glUseProgram"))(t);
+	// TODO check errors
 	return t;
 }
 

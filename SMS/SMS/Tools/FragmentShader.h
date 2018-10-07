@@ -9,7 +9,7 @@ public:
 
 
 	bool Load(const char *path, bool isPath = false);
-	int Run();
+	unsigned int Run();
 	
 
 	~FragmentShader();
