@@ -34,8 +34,8 @@ vec2 myPixel(vec2 uv, float coef)
   float coefL = coef;//0.05;//mix(0.2, 0.012, cos(time/1.14)*0.5+0.5);
   float cx = coefL;
   float cy = cx;
-  vec2 coef= vec2(cx, cy);
-  vec2 coefed = uv *coef;
+  vec2 coef2d = vec2(cx, cy);
+  vec2 coefed = uv *coef2d;
   return (coefed - fract(coefed))/coef;
 }
 

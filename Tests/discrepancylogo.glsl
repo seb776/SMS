@@ -147,7 +147,10 @@ vec3 drawTxt(vec2 uv, vec2 pos)
 
   return vec3(clamp(res,0.0,1.0));
 }
-
+float sat(float a)
+{
+  return max(min(a, 1.0),0.0);
+}
 vec3 drawTxtChroma(vec2 uv, vec2 pos)
 {
   float spread= 0.002;
@@ -156,7 +159,7 @@ vec3 drawTxtChroma(vec2 uv, vec2 pos)
   col.r = drawTxt(uv+dir*spread, pos).r;
   col.g = drawTxt(uv, pos).g;
   col.b = drawTxt(uv-dir*spread, pos).b;
-  return col+rand(uv+time);
+  return col+sat(rand(uv+time))*0.8;
 }
 
 

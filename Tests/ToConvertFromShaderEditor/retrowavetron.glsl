@@ -13,6 +13,10 @@ uniform vec3 rotation;
 uniform sampler2D Hassle;
 uniform sampler2D backbuffer;
 
+// bike image https://www.pinterest.fr/pin/121808364899834890/
+#iChannel0 buf://self
+#iChannel1 file://C:/Users/s.maire/Documents/Projects/Perso/SMS/Tests/Resources/Resources/bike.png
+
 vec3 topColor = vec3(0.945, 0.694, 0.274);
 vec3 downColor = vec3(0.945, 0.274, 0.654);
 float sunSize= 0.4;
@@ -205,7 +209,7 @@ void main(void) {
       if (!planes[i].isbike || (planes[i].isbike &&
         ret.x > 45.0 && ret.x< 50.0 && ret.y >0.0 && ret.y < 5.0 &&
       //  texture2D(Hassle, ret.xy*0.2*vec2(-1.0,1.0)).g < 0.9))
-       texture2D(BikeTex, ret.xy*0.2*vec2(-1.0,1.0)).x < 0.1)
+       texture2D(iChannel1, ret.xy*0.2*vec2(-1.0,1.0)).x < 0.1)
        ||isTrail)
         {
       dist = ret.z;
@@ -214,7 +218,7 @@ void main(void) {
       if(isTrail)
       {
         float m = sin(((uv.x)+uv.y)*50.0+time*20.0);
-        outCol = vec3(clamp01(m))+texture2D(backbuffer, uv).xyz
+        outCol = vec3(clamp01(m))+texture2D(iChannel0, uv).xyz
         *vec3(1.9,0.6,0.83);
        }
       }
@@ -267,13 +271,13 @@ void main(void) {
 outCol*= flare+vec3(sin(time)*0.2+0.3,0.8,0.8);
 outCol += flare*0.3;
 
- outCol += vec3(rand(uvRatio*time))*0.2;
+ outCol += vec3(rand(uvRatio*time))*0.1;
 
  float crush = 1.0;
   float frange = 2.5;
   float exposure = 9.0;
 
   outCol = smoothstep(crush,frange+crush, log2(1.0+outCol*exposure));
-  outCol += texture2D(backbuffer, uvO+vec2(0.02,0.0)).xyz*0.2;
+  outCol += texture2D(iChannel0, uvO+vec2(0.02,0.0)).xyz*0.2;
   gl_FragColor = vec4(outCol,1.0);
 }
