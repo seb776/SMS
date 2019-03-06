@@ -31,8 +31,33 @@ float sat(float a)
 }
 vec3 rdrSky(vec3 v)
 {
+    /*
+    float factor = (1.0-abs(v.y)) * 3.0;
+
+    float r = factor / 3.0 + 0.5;
+    float g = factor-1.5;
+    float b = factor-0.5;
+    return vec3(r, g, b) / 3.0;
+    return vec3((1.0-abs(v.y)) * 3.0);
+*/
   return pow(sat(1.05-abs(v.y)),5.0)*vec3(0.4,0.5,0.976)*1.5;
   return vec3(0.0);
+}
+
+vec3 rdrSky2(vec3 v)
+{
+  return pow(sat(1.05-abs(v.y)),5.0)*vec3(0.4,0.5,0.976)*1.5;
+  return vec3(0.0);
+}
+
+
+float sdf_cube(vec3 p)
+{
+    vec3 sz = vec3(0.5);
+    vec3 diff = abs(p) - sz;
+
+    return max(diff.x, max(diff.y, diff.z));
+    return 0.0;
 }
 
 float sdf_sph(vec3 p, float rad)
@@ -83,7 +108,9 @@ vec3 rdr(vec2 uv)
   p = orig+dir;
   for (int i = 0; i< marchStp&&totDst < maxDst&&outCol.x<0.62;++i)
   {
-    float dst = sdf_sph(sdf_repeat(p,vec3(3.0)), 0.58);
+    //float dst = sdf_sph(sdf_repeat(p,vec3(3.0)), 0.58);
+    float dst = sdf_cube(sdf_repeat(p,vec3(3.0)));
+
     if (dst <EPS)
     {
       outCol += 0.1*hlf.xyz*(-dst*10.0)*(maxDst-totDst)/maxDst;
