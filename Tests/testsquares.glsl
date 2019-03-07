@@ -31,24 +31,30 @@ float sat(float a)
 }
 vec3 rdrSky(vec3 v)
 {
-    /*
-    float factor = (1.0-abs(v.y)) * 3.0;
-
-    float r = factor / 3.0 + 0.5;
-    float g = factor-1.5;
-    float b = factor-0.5;
-    return vec3(r, g, b) / 3.0;
-    return vec3((1.0-abs(v.y)) * 3.0);
-*/
-  return pow(sat(1.05-abs(v.y)),5.0)*vec3(0.4,0.5,0.976)*1.5;
+  return pow(sat(1.05-abs(v.y)),5.0)*vec3(0.4,0.5,0.976)*0.5;
   return vec3(0.0);
 }
+vec3 colRainbowA = vec3(69,131,211) / 255.0;
+vec3 colRainbowB = vec3(44,232,56) / 255.0;
+vec3 colRainbowC = vec3(249,173,79) / 255.0;
+vec3 colRainbowD = vec3(224,83,17)  / 255.0;
 
 vec3 rdrSky2(vec3 v)
 {
+
+  // 0 - 1 // 
+  float maxVal = 3.0;
+  float f = abs(v.y) * 8.0;
+  if (f > maxVal)
+    return vec3(0.0);
+  if (mod(time, f) < 1.0)//f < (maxVal / 4.0))
+    return 1.7*mix(colRainbowD*1.2+vec3(0.8), colRainbowC, f / (maxVal / 4.0));
+  //return 
+
   return pow(sat(1.05-abs(v.y)),5.0)*vec3(0.4,0.5,0.976)*1.5;
   return vec3(0.0);
 }
+
 
 
 float sdf_cube(vec3 p)
@@ -103,7 +109,7 @@ vec3 rdr(vec2 uv)
   vec3 p;
   vec3 dir = setCam(orig, uv);
   float totDst = 0.0;
-  vec3 outCol = rdrSky(dir);
+  vec3 outCol = rdrSky2(dir)*0.5;
 
   p = orig+dir;
   for (int i = 0; i< marchStp&&totDst < maxDst&&outCol.x<0.62;++i)
@@ -113,7 +119,7 @@ vec3 rdr(vec2 uv)
 
     if (dst <EPS)
     {
-      outCol += 0.1*hlf.xyz*(-dst*10.0)*(maxDst-totDst)/maxDst;
+      outCol += 0.2*hlf.xyz*(-dst*10.0)*(maxDst-totDst)/maxDst;
       dst = -dst+0.5+EPS;
 
     //  break;
