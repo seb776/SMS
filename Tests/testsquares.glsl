@@ -47,7 +47,7 @@ vec3 rdrSky2(vec3 v)
   float f = abs(v.y) * 8.0;
   if (f > maxVal)
     return vec3(0.0);
-  if (mod(time, f) < 1.0)//f < (maxVal / 4.0))
+  if (mod((sin(time) + 1.5) * 4.0, f) < 1.0)//f < (maxVal / 4.0))
     return 1.7*mix(colRainbowD*1.2+vec3(0.8), colRainbowC, f / (maxVal / 4.0));
   //return 
 
@@ -78,8 +78,8 @@ vec3 sdf_repeat(vec3 p, vec3 c)
 
 vec3 setCam(vec3 origin, vec2 uv)
 {
-  float pitch = cos(0.4*time)*0.1+0.39;
-  float yaw = sin(time*0.1)*0.55;
+  float pitch = cos(0.1*time)*0.9+0.39;
+  float yaw = sin(time*0.2)*0.8;
   vec3 fwd = vec3(0.0,0.0,1.0);
   vec3 right = vec3(-1.0,0.0,0.0);
   vec3 up = vec3(0.0,1.0,0.0);
@@ -102,14 +102,17 @@ vec3 setCam(vec3 origin, vec2 uv)
 
   return vec;
 }
-
+vec3 sat(vec3 v)
+{
+  return vec3(clamp(v.x, 0.0, 1.0), clamp(v.y, 0.0, 1.0), clamp(v.z, 0.0, 1.0));
+}
 vec3 rdr(vec2 uv)
 {
-  vec3 orig=vec3(0.0,3.5*sin(time*0.5),-5.0);
+  vec3 orig=vec3(0.0,time*0.7,-5.0);
   vec3 p;
   vec3 dir = setCam(orig, uv);
   float totDst = 0.0;
-  vec3 outCol = rdrSky2(dir)*0.5;
+  vec3 outCol = sat(rdrSky2(dir)*0.5);
 
   p = orig+dir;
   for (int i = 0; i< marchStp&&totDst < maxDst&&outCol.x<0.62;++i)
@@ -127,6 +130,7 @@ vec3 rdr(vec2 uv)
       totDst+= dst;
       p += dir*dst;
   }
+  outCol *= vec3(0.6, 0.13, 0.477) + vec3(0.3);
   return outCol;
 }
 
