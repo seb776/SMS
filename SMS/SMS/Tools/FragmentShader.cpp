@@ -32,6 +32,7 @@ bool FragmentShader::Load(const char *path, bool isPath) {
 
 
 unsigned int FragmentShader::Run() {
+	
 	const unsigned int t = glCreateShaderProgramEXT(GL_FRAGMENT_SHADER, _shaderCode);
 	GLint status = 0;
 	glGetShaderiv(t, GL_COMPILE_STATUS, &status);
@@ -43,6 +44,7 @@ unsigned int FragmentShader::Run() {
 			GL_NO_ERROR)
 		{
 			errString = glGetString(errCode);
+			OutputDebugString((char*)errString);
 		}
 		//glGetShaderInfoLog()
 		return 0;

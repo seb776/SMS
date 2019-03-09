@@ -56,6 +56,9 @@
     <ClInclude Include="ShaderBuilt\ShaderBuilt.h">
       <Filter>Header Files\ShaderBuilt</Filter>
     </ClInclude>
+    <ClInclude Include="Tools\Debug.h">
+      <Filter>Header Files\Tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SMS.cpp">
@@ -77,6 +80,9 @@
       <Filter>Header Files\ShaderBuilt</Filter>
     </ClCompile>
     <ClCompile Include="Tools\FltUsed.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Tools\Debug.cpp">
       <Filter>Source Files\Tools</Filter>
     </ClCompile>
   </ItemGroup>

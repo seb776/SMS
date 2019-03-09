@@ -15,7 +15,7 @@ uniform sampler2D backbuffer;
 
 // bike image https://www.pinterest.fr/pin/121808364899834890/
 #iChannel0 buf://self
-#iChannel1 file://C:/Users/s.maire/Documents/Projects/Perso/SMS/Tests/Resources/Resources/bike.png
+#iChannel1 file://../Resources/bike.png
 
 vec3 topColor = vec3(0.945, 0.694, 0.274);
 vec3 downColor = vec3(0.945, 0.274, 0.654);

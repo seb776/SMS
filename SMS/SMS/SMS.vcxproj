@@ -443,6 +443,7 @@
     <ClInclude Include="ShaderBuilt\ShaderBuilt.h" />
     <ClInclude Include="SMS.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="Tools\Debug.h" />
     <ClInclude Include="Tools\FragmentShader.h" />
     <ClInclude Include="Tools\MeanLeanWindows.h" />
     <ClInclude Include="Tools\Memory.h" />
@@ -452,6 +453,7 @@
   <ItemGroup>
     <ClCompile Include="ShaderBuilt\ShaderBuilt.cpp" />
     <ClCompile Include="SMS.cpp" />
+    <ClCompile Include="Tools\Debug.cpp" />
     <ClCompile Include="Tools\FltUsed.cpp" />
     <ClCompile Include="Tools\FragmentShader.cpp" />
     <ClCompile Include="Tools\Memory.cpp" />
