@@ -1,3 +1,4 @@
+#include "MeanLeanWindows.h"
 #include "Debug.h"
 
 void LogConsole(const char *str)
