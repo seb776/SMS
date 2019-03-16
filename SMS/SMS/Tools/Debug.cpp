@@ -7,6 +7,7 @@ void LogConsole(const char *str)
 	OutputDebugString("\n");
 #endif // !DEBUG
 }
+
 void LogConsole(const char *strA, const char *strB)
 {
 #if DEBUG
@@ -15,6 +16,7 @@ void LogConsole(const char *strA, const char *strB)
 	OutputDebugString("\n");
 #endif // !DEBUG
 }
+
 void LogConsole(const char *strA, const char *strB, char *strC)
 {
 #if DEBUG

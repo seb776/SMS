@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -445,6 +445,7 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Tools\Debug.h" />
     <ClInclude Include="Tools\FragmentShader.h" />
+    <ClInclude Include="Tools\Math.h" />
     <ClInclude Include="Tools\MeanLeanWindows.h" />
     <ClInclude Include="Tools\Memory.h" />
     <ClInclude Include="Window\AWin32Window.h" />
@@ -456,6 +457,7 @@
     <ClCompile Include="Tools\Debug.cpp" />
     <ClCompile Include="Tools\FltUsed.cpp" />
     <ClCompile Include="Tools\FragmentShader.cpp" />
+    <ClCompile Include="Tools\Math.cpp" />
     <ClCompile Include="Tools\Memory.cpp" />
     <ClCompile Include="Window\AWin32Window.cpp" />
     <ClCompile Include="Window\ParametersWindow.cpp" />
