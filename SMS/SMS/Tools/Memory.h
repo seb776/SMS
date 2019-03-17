@@ -8,4 +8,4 @@ namespace Memory
 
 //extern "C" void * __cdecl memcpy(void *dst, const void *src, size_t size);
 
-#pragma function(memcpy)
+#pragma intrinsic(memcpy)

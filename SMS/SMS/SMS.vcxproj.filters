@@ -50,9 +50,6 @@
     <ClInclude Include="Tools\Memory.h">
       <Filter>Header Files\Tools</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ShaderBuilt\ShaderBuilt.h">
       <Filter>Header Files\ShaderBuilt</Filter>
     </ClInclude>
@@ -93,16 +90,13 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="SMS.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Shaders\Shader2.glsl">
-      <Filter>Header Files\Shaders</Filter>
-    </None>
     <None Include="Shaders\ShaderTest.glsl">
       <Filter>Header Files\Shaders</Filter>
     </None>
-    <None Include="Shaders\RetroReflect.glsl">
+    <None Include="Shaders\Shader2.glslout">
+      <Filter>Header Files\Shaders</Filter>
+    </None>
+    <None Include="Shaders\RetroReflect.glslout">
       <Filter>Header Files\Shaders</Filter>
     </None>
   </ItemGroup>

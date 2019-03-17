@@ -30,6 +30,13 @@
 ** THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+/*
+** glew.c line 16221
+** #pragma optimize( "gst", off )
+** static GLenum GLEWAPIENTRY glewContextInit ()
+** To avoid _memset on loop init and allow program optimization on the rest of the program
+*/
+
 #include <GL/glew.h>
 
 #if defined(GLEW_OSMESA)
@@ -16151,7 +16158,7 @@ GLboolean GLEWAPIENTRY glewGetExtension (const char* name)
 
 typedef const GLubyte* (GLAPIENTRY * PFNGLGETSTRINGPROC) (GLenum name);
 typedef void (GLAPIENTRY * PFNGLGETINTEGERVPROC) (GLenum pname, GLint *params);
-
+#pragma optimize( "gst", off )
 static GLenum GLEWAPIENTRY glewContextInit ()
 {
   PFNGLGETSTRINGPROC getString;

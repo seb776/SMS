@@ -1,0 +1,5 @@
+glew.c line 16221
+#pragma optimize( "gst", off )
+static GLenum GLEWAPIENTRY glewContextInit ()
+
+To avoid _memset on loop init and allow program optimization on the rest of the program
