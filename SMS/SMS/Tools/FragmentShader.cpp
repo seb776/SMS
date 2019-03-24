@@ -1,6 +1,8 @@
-#include <GL\glew.h>
-#include "FragmentShader.h"
+//#include <GL\glew.h>
 #include "MeanLeanWindows.h"
+#include <gl\GL.h>
+#include ".\..\dependencies\gl\glext.h"
+#include "FragmentShader.h"
 #include "Memory.h"
 
 FragmentShader::FragmentShader() {
@@ -33,9 +35,9 @@ bool FragmentShader::Load(const char *path, bool isPath) {
 
 unsigned int FragmentShader::Run() {
 	
-	const unsigned int t = glCreateShaderProgramEXT(GL_FRAGMENT_SHADER, _shaderCode);
+	const unsigned int t = ((PFNGLCREATESHADERPROGRAMEXTPROC)wglGetProcAddress("glCreateShaderProgramEXT"))(GL_FRAGMENT_SHADER, _shaderCode);
 	GLint status = 0;
-	glGetShaderiv(t, GL_COMPILE_STATUS, &status);
+	((PFNGLGETSHADERIVPROC)wglGetProcAddress("glGetShaderiv"))(t, GL_COMPILE_STATUS, &status);
 	if (status == GL_FALSE)
 	{
 		GLenum errCode;
