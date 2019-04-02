@@ -75,12 +75,12 @@
     <LibraryPath>$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86;$(SolutionDir)$(Platform)\$(Configuration)\;</LibraryPath>
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);..\GlewStatic\Gl\include</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);./dependencies/</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64;$(SolutionDir)$(Platform)\$(Configuration)\</LibraryPath>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);..\GlewStatic\Gl\include;</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);./dependencies/</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -95,7 +95,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64;$(SolutionDir)$(Platform)\$(Configuration)\</LibraryPath>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);./dependencies/;..\GlewStatic\Gl\include;</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);./dependencies/;</IncludePath>
     <GenerateManifest>false</GenerateManifest>
     <EmbedManifest>false</EmbedManifest>
   </PropertyGroup>
@@ -316,6 +316,7 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Tools\Debug.h" />
     <ClInclude Include="Tools\FragmentShader.h" />
+    <ClInclude Include="Tools\GLHelper.h" />
     <ClInclude Include="Tools\Math.h" />
     <ClInclude Include="Tools\MeanLeanWindows.h" />
     <ClInclude Include="Tools\Memory.h" />
@@ -328,16 +329,17 @@
     <ClCompile Include="Tools\Debug.cpp" />
     <ClCompile Include="Tools\FltUsed.cpp" />
     <ClCompile Include="Tools\FragmentShader.cpp" />
+    <ClCompile Include="Tools\GLHelper.cpp" />
     <ClCompile Include="Tools\Math.cpp" />
     <ClCompile Include="Tools\Memory.cpp" />
     <ClCompile Include="Window\AWin32Window.cpp" />
     <ClCompile Include="Window\ParametersWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Shaders\RetroReflect.glslout">
+    <None Include="Shaders\RetroReflect.glsl">
       <FileType>CppCode</FileType>
     </None>
-    <None Include="Shaders\Shader2.glslout" />
+    <None Include="Shaders\Shader2.glsl" />
     <None Include="Shaders\ShaderTest.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

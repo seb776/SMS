@@ -1,6 +1,6 @@
 //#include <GL\glew.h>
 #include "MeanLeanWindows.h"
-#include <gl\GL.h>
+#include "GLHelper.h"
 #include ".\..\dependencies\gl\glext.h"
 #include "FragmentShader.h"
 #include "Memory.h"
@@ -35,9 +35,10 @@ bool FragmentShader::Load(const char *path, bool isPath) {
 
 unsigned int FragmentShader::Run() {
 	
-	const unsigned int t = ((PFNGLCREATESHADERPROGRAMEXTPROC)wglGetProcAddress("glCreateShaderProgramEXT"))(GL_FRAGMENT_SHADER, _shaderCode);
+	const unsigned int t = glCreateShaderProgramEXT(GL_FRAGMENT_SHADER, _shaderCode);
+	
 	GLint status = 0;
-	((PFNGLGETSHADERIVPROC)wglGetProcAddress("glGetShaderiv"))(t, GL_COMPILE_STATUS, &status);
+	glGetShaderiv(t, GL_COMPILE_STATUS, &status);
 	if (status == GL_FALSE)
 	{
 		GLenum errCode;
@@ -48,13 +49,24 @@ unsigned int FragmentShader::Run() {
 			errString = glGetString(errCode);
 			OutputDebugString((char*)errString);
 		}
-		//glGetShaderInfoLog()
-		return 0;
+		//return 0;
 	}
-	//const unsigned int t = ((PFNGLCREATESHADERPROGRAMEXTPROC)wglGetProcAddress("glCreateShaderProgramEXT"))(GL_FRAGMENT_SHADER, _shaderCode);
 
-	((PFNGLUSEPROGRAMPROC)wglGetProcAddress("glUseProgram"))(t);
-	// TODO check errors
+	status = 0;
+	glGetShaderiv(t, GL_LINK_STATUS, &status);
+	if (status == GL_FALSE)
+	{
+		GLenum errCode;
+		const GLubyte *errString;
+		if ((errCode = glGetError()) !=
+			GL_NO_ERROR)
+		{
+			errString = glGetString(errCode);
+			OutputDebugString((char*)errString);
+		}
+		//return 0;
+	}
+	glUseProgram(t);
 	return t;
 }
 

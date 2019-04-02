@@ -1,18 +1,20 @@
+#version 330
+
 layout(location = 0) uniform float iGlobalTime;
 layout(location = 1) uniform vec2 iResolution;
 
-vec3 topColor = vec3(0.945, 0.694, 0.274);
-vec3 downColor = vec3(0.945, 0.274, 0.654);
-float sunSize= 0.4;
-float glowSize = 0.1;
+uniform vec3 topColor = vec3(0.945, 0.694, 0.274);
+uniform vec3 downColor = vec3(0.945, 0.274, 0.654);
+uniform float sunSize= 0.4;
+uniform float glowSize = 0.1;
 
-int glossSamples = 8;
-float coneAperture = 0.3;
+uniform int glossSamples = 8;
+uniform float coneAperture = 0.3;
 
-int marchStep = 512;
-float marchDist = 200.0;
+uniform int marchStep = 512;
+uniform float marchDist = 200.0;
 
-float EPSILON = 0.00001;
+uniform float EPSILON = 0.00001;
 
 
 vec3 colorlerp(vec3 a, vec3 b, float c)
