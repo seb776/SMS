@@ -23,7 +23,7 @@
     <ProjectGuid>{206F7618-62F3-4095-B7A8-74C50F9DA676}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>SMS</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -339,6 +339,7 @@
     <None Include="Shaders\RetroReflect.glsl">
       <FileType>CppCode</FileType>
     </None>
+    <None Include="Shaders\Pharma.glsl" />
     <None Include="Shaders\Shader2.glsl" />
     <None Include="Shaders\ShaderTest.glsl" />
   </ItemGroup>

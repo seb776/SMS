@@ -3,12 +3,12 @@
 class FragmentShader
 {
 private:
-	char _shaderCode[2048];
+	char *_shaderCode;
 public:
 	FragmentShader();
 
 
-	bool Load(const char *path, bool isPath = false);
+	bool Load(const char code[]);
 	unsigned int Run();
 	
 
