@@ -44,5 +44,6 @@ namespace Discrepancy
 		// based on radians
 		float Sin(float a);
 		float Cos(float a);
+		float Ceil(float a);
 	}
 }

@@ -5,6 +5,8 @@
 #include "FragmentShader.h"
 #include "Memory.h"
 
+using namespace Discrepancy;
+
 FragmentShader::FragmentShader() {
 
 }

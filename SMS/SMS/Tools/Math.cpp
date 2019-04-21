@@ -52,3 +52,8 @@ float Math::Cos(float a)
 {
 	return Math::Sin(a + MathConstants::PI_2);
 }
+
+float Math::Ceil(float a)
+{
+	return (float)((int)a + 1 * (int)(a > 0.0));
+}

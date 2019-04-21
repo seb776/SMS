@@ -62,6 +62,9 @@
     <ClInclude Include="Tools\GLHelper.h">
       <Filter>Header Files\Tools</Filter>
     </ClInclude>
+    <ClInclude Include="SoundEngine\SoundEngine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SMS.cpp">
@@ -93,6 +96,9 @@
     </ClCompile>
     <ClCompile Include="Tools\GLHelper.cpp">
       <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundEngine\SoundEngine.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

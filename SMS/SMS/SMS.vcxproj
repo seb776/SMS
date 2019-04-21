@@ -313,6 +313,7 @@
   <ItemGroup>
     <ClInclude Include="ShaderBuilt\ShaderBuilt.h" />
     <ClInclude Include="SMS.h" />
+    <ClInclude Include="SoundEngine\SoundEngine.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Tools\Debug.h" />
     <ClInclude Include="Tools\FragmentShader.h" />
@@ -326,6 +327,7 @@
   <ItemGroup>
     <ClCompile Include="ShaderBuilt\ShaderBuilt.cpp" />
     <ClCompile Include="SMS.cpp" />
+    <ClCompile Include="SoundEngine\SoundEngine.cpp" />
     <ClCompile Include="Tools\Debug.cpp" />
     <ClCompile Include="Tools\FltUsed.cpp" />
     <ClCompile Include="Tools\FragmentShader.cpp" />

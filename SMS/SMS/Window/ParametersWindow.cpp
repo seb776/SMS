@@ -2,6 +2,8 @@
 #include "ParametersWindow.h"
 #include "../Tools/Memory.h"
 
+using namespace Discrepancy;
+
 HWND ParametersWindow::g_hWndBtn;
 
 void CreateOpenGLFullScreen(int width, int height);
