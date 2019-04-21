@@ -56,7 +56,7 @@ unsigned int FragmentShader::Run() {
 
 	// Note the different functions here: glGetProgram* instead of glGetShader*.
 	GLint isLinked = 0;
-	glGetProgramiv(program, GL_LINK_STATUS, (int *)&isLinked);
+	glGetProgramiv(program, GL_LINK_STATUS, &isLinked);
 	if (isLinked == GL_FALSE)
 	{
 		GLint maxLength = 0;
@@ -69,6 +69,9 @@ unsigned int FragmentShader::Run() {
 		char *buffer = (char *)HeapAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY, maxLength);
 
 		glGetProgramInfoLog(program, maxLength, &maxLength, &buffer[0]);
+
+		OutputDebugString("link program info log");
+		OutputDebugString((char*)buffer);
 	}
 	glUseProgram(program);
 	return program;

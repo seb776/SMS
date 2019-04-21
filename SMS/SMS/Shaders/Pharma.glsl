@@ -215,7 +215,7 @@ vec3 rdrMat(vec3 p, vec2 uv)
 
 vec3 rdr(vec2 uv)
 {
-	vec3 orig = vec3(0.0, 0.0, 0.0);
+	vec3 orig = vec3(0.0, 0.0, 2.0);
 	vec3 tex = black.xxx;
 	vec3 dirMarch = setCam(uv, 0.9*(sin(time*12.389)*0.5 + 1.2), 0.0, 0.0, 0.0);
 	float totDist = 0.0;
@@ -260,14 +260,13 @@ vec3 renderAsDot(vec2 uv, vec2 center)
 
 vec3 rdrChroma(vec2 uv)
 {
-	float factFlare2 = lengthNY(uv)*float(pointerCount + 1)*1.0;
-	vec3 rdrV = rdr(uv);
-	return (rdrV*blue.xyz) + vec3(0.543, 0.22, 0.789)*factFlare2 + 2.0*rdrV*renderAsDot(uv, vec2(0.5)) + rdrFlare(uv)*30.0;
-	vec2 dir = vec2(0.01)*sin(uv.y + time);
+	float factFlare2 = lengthNY(uv)*float(pointerCount + 1)*0.2;
+	vec2 dir = normalize(uv)*pow(length(uv), 0.5*sin(time) + 1.5);/* vec2(0.01)*sin(uv.y + time);*/
 	float r = rdr(uv + dir).x;
 	float g = rdr(uv).y;
 	float b = rdr(uv - dir).z;
-	return vec3(r, g, b);
+	vec3 rdrV = vec3(r, g, b);
+	return (rdrV*blue.xyz) + vec3(0.543, 0.22, 0.789)*factFlare2 + 2.0*rdrV*renderAsDot(uv, vec2(0.5)) + rdrFlare(uv)*5.0;
 }
 
 void main(void) {

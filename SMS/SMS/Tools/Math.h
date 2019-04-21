@@ -4,54 +4,45 @@
 
 #pragma once
 
-///
-/// \brief		Predefined mathematical constants.
-///
+namespace Discrepancy
+{
+	namespace MathConstants {
+		const float E = 2.71828182845904523536f;
+		const float LOG2E = 1.44269504088896340736f;
+		const float LOG10E = 0.434294481903251827651f;
+		const float LN2 = 0.693147180559945309417f;
+		const float LN10 = 2.30258509299404568402f;
+		const float PI = 3.14159265358979323846f;
+		const float PI_2 = 1.57079632679489661923f;
+		const float PI_4 = 0.785398163397448309616f;
+		const float PI_1_PI = 0.318309886183790671538f;
+		const float PI_2_PI = 0.636619772367581343076f;
+		const float PI_2_SQRTPI = 1.12837916709551257390f;
+		const float SQRT2 = 1.41421356237309504880f;
+		const float SQRT1_2 = 0.707106781186547524401f;
+	};
 
-///
-/// \brief		Pi, the ratio of a circle’s circumference to its diameter.
-///
-#define SMS_PI_F	3.1415927f
+	namespace Math
+	{
+		constexpr float Pow(float a, unsigned int b)
+		{
+			return (b > 1 ? a * Pow(a, b - 1) : a);
+		}
 
-///
-/// \brief		Pi divided by two.
-///
-#define SMS_PI_2_F	1.5707963f
+		constexpr int Fact(unsigned int n) 
+		{
+			return n ? (n * Fact(n - 1)) : 1;
+		}
 
-///
-/// \brief		Pi divided by four.
-///
-#define SMS_PI_4_F	0.7853982f
 
-///
-/// \brief		Functions to compute common mathematical operations and transformations.
-///
+		float Fmod(float a, float b);
 
-///
-/// \brief		Computes the power of a number.
-///
-#define	POW2(x)		(x * x)
-#define POW3(x)		(x * x * x)
-#define POW5(x)		(x * x * x * x * x)
-#define POW7(x)		(x * x * x * x * x * x * x)
+		float Abs(float a);
+		float Sign(float a);
+		float IsNeg(float a);
 
-///
-/// \brief		Returns the remainder of x divided by y
-///
-float fmod(float a, float b);
-
-///
-/// \brief		Factorial of a positive integer n (denoted by n!)
-///
-/// \details	Product of all positive integers less than or equal to n
-///				The factorial of a positive number n is given by : n! = 1 * 2 * 3 * 4....n
-///				The factorial of a negative number doesn't exist.
-///				Factorial of 0 is 1. And 0! = 1
-constexpr int fact(int n);
-
-///
-/// \brief		Returns sine of approximate of a radian angle x.
-///
-float MySin(float a);
-
-// END
+		// based on radians
+		float Sin(float a);
+		float Cos(float a);
+	}
+}

@@ -19,6 +19,10 @@ DEFINE_GL_FUNC(PFNGLCREATEPROGRAMPROC, glCreateProgram)
 DEFINE_GL_FUNC(PFNGLATTACHSHADERPROC, glAttachShader)
 DEFINE_GL_FUNC(PFNGLGETPROGRAMIVPROC, glGetProgramiv)
 
+DEFINE_GL_FUNC(PFNGLUNIFORM2FVPROC, glUniform2fv)
+
+DEFINE_GL_FUNC(PFNGLUNIFORM1IPROC, glUniform1i)
+
 
 
 static void *GetAnyGLFuncAddress(const char *name)
@@ -56,6 +60,10 @@ int initOpenGL()
 	INIT_GL_FUNC(glCreateProgram);
 	INIT_GL_FUNC(glAttachShader);
 	INIT_GL_FUNC(glGetProgramiv);
+
+	INIT_GL_FUNC(glUniform2fv);
+
+	INIT_GL_FUNC(glUniform1i);
 
 	return 0;
 }
