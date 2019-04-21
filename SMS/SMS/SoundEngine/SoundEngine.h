@@ -9,10 +9,10 @@ namespace Discrepancy
 		void *_buffer;
 	public:
 		// duration seconds
-		SoundEngine(float duration);
+		SoundEngine();
 		~SoundEngine();
 
-		void Generate();
+		void Generate(float duration);
 		void Play();
 	};
 }
