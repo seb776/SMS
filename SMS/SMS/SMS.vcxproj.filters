@@ -117,5 +117,8 @@
     <None Include="Shaders\DebugMathFunction.glsl">
       <Filter>Header Files\Shaders</Filter>
     </None>
+    <None Include="Shaders\TestOverlay.glsl">
+      <Filter>Header Files\Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

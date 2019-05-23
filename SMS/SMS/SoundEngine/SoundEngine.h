@@ -8,7 +8,6 @@ namespace Discrepancy
 	{
 		void *_buffer;
 	public:
-		// duration seconds
 		SoundEngine();
 		~SoundEngine();
 

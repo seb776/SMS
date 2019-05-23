@@ -77,45 +77,6 @@ unsigned int FragmentShader::Run() {
 	}
 	glUseProgram(program);
 	return program;
-	//const unsigned int t = glCreateShaderProgram(GL_FRAGMENT_SHADER, _shaderCode);
-	//
-	//GLint status = 0;
-	//glGetShaderiv(t, GL_COMPILE_STATUS, &status);
-	//if (status == GL_FALSE)
-	//{
-	//	GLint maxLength = 0;
-	//	glGetShaderiv(t, GL_INFO_LOG_LENGTH, &maxLength);
-	//	char *buffer = (char *)HeapAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY, maxLength);
-	//	glGetShaderInfoLog(t, maxLength, &maxLength, &buffer[0]);
-	//	glGetProgramInfoLog(t, maxLength, &maxLength, &buffer[0]);
-
-	//	GLenum errCode;
-	//	const GLubyte *errString;
-	//	if ((errCode = glGetError()) !=
-	//		GL_NO_ERROR)
-	//	{
-	//		errString = glGetString(errCode);
-	//		OutputDebugString((char*)errString);
-	//	}
-	//	//return 0;
-	//}
-
-	//status = 0;
-	//glGetShaderiv(t, GL_LINK_STATUS, &status);
-	//if (status == GL_FALSE)
-	//{
-	//	GLenum errCode;
-	//	const GLubyte *errString;
-	//	if ((errCode = glGetError()) !=
-	//		GL_NO_ERROR)
-	//	{
-	//		errString = glGetString(errCode);
-	//		OutputDebugString((char*)errString);
-	//	}
-	//	//return 0;
-	//}
-	//glUseProgram(t);
-	//return t;
 }
 
 
