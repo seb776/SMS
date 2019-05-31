@@ -76,7 +76,7 @@ void GenerateWaveHeader(void *soundBuf, unsigned int bufferSize, int bps, int nu
 // does not take WaveHeader into account
 int CalculateBufferSize(int bps, int numCh, int sampleRate, float duration)
 {
-	int bufferSize = numCh * (bps/8)*sampleRate*(int)Math::Ceil(duration);
+	int bufferSize = numCh * (bps / 8)*sampleRate*(int)Math::Ceil(duration);
 	return bufferSize;
 }
 
@@ -109,17 +109,20 @@ void Discrepancy::SoundEngine::Generate(float duration)
 
 	char nbr[16];
 
-	float frequency = 894.0f;// 432.0f;
+	float frequency = 110.0f;
 	int sampleSize = (bps / 8)*channels;
 	for (int iSample = 0; iSample < bufferSize; iSample += sampleSize)
 	{
-		float seconds = (float)iSample / ((float)sampleRate * (float)(bps/8) * channels);
+		float seconds = (float)iSample / ((float)sampleRate * (float)(bps / 8) * channels);
 
-		//if ((iSample % (sampleRate * 2)) == 0 && seconds < 4.0f)
-		//	frequency += 50.0f;
+		if ((iSample % (sampleRate)) == 0 && seconds < 4.0f)
+			frequency += 25.0f;
 
 
-		int left = (int)(((Math::Sin(seconds * frequency * MathConstants::PI * 2.0f) * 0.5f) + 0.5f) * 255.0f * 0.5f);
+		//int left = (int)(((Math::Sin(seconds * frequency * MathConstants::PI * 2.0f) * 0.5f) + 0.5f) * 255.0f * 0.5f);
+		//int right = left;
+
+		int left = (int)((Math::Fmod(seconds * frequency, 1.0f)*2.0f - 1.0f)*255.0f);
 		int right = left;
 
 		switch (bps)
@@ -127,8 +130,8 @@ void Discrepancy::SoundEngine::Generate(float duration)
 		case 8:
 			data[iSample] = left;
 			data[iSample + 1] = right;
-			default:
-				break;
+		default:
+			break;
 		}
 
 		if ((iSample % 100) == 0)
@@ -145,24 +148,7 @@ void Discrepancy::SoundEngine::Generate(float duration)
 		}
 	}
 
-	//for (int i = 0; i < bufferSize; i += 2)
-	//{
-	//	float seconds = (float)i;
 
-	//	data[i] = i % 200;// (unsigned char)(Math::Sin(i*0.5) * 127.0f) + 126U;
-	//	if ((i % 100) == 0)
-	//	{
-	//		float percent = ((float)i / (float)bufferSize)*100.0f;
-	//		int pct = (int)percent;
-
-	//		Memory::Memset(nbr, 16);
-	//		OutputDebugString(putnbr(pct, nbr, 15));
-	//		OutputDebugStringW(L"/");
-	//		Memory::Memset(nbr, 16);
-	//		OutputDebugString(putnbr(100, nbr, 15));
-	//		OutputDebugStringW(L"\n");
-	//	}
-	//}
 }
 
 void Discrepancy::SoundEngine::Play()

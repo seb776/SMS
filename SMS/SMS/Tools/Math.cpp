@@ -1,10 +1,17 @@
 #include <SSEMaths/sse_mathfun.h>
+#include <smmintrin.h>
 #include "Math.h"
 
 using namespace Discrepancy;
 
 float Math::Fmod(float a, float b)
 {
+	float div = a / b;
+	__m128 div4 = _mm_set_ps1(div);
+	__m128 flr = _mm_floor_ps(div4);
+
+	return a - b * flr.m128_f32[0];
+
 	// Handling negative values 
 	if (a < MathConstants::EPS)
 		a = -a;
