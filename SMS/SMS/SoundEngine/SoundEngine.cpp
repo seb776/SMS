@@ -76,7 +76,7 @@ void GenerateWaveHeader(void *soundBuf, unsigned int bufferSize, int bps, int nu
 // does not take WaveHeader into account
 int CalculateBufferSize(int bps, int numCh, int sampleRate, float duration)
 {
-	int bufferSize = numCh * bps*sampleRate*(int)Math::Ceil(duration);
+	int bufferSize = numCh * (bps/8)*sampleRate*(int)Math::Ceil(duration);
 	return bufferSize;
 }
 
@@ -93,7 +93,7 @@ char *putnbr(int nbr, char *buf, int size)
 void Discrepancy::SoundEngine::Generate(float duration)
 {
 	int bps = 8;
-	int sampleRate = 8000;
+	int sampleRate = 22050;
 	int channels = 2;
 
 	int bufferSize = CalculateBufferSize(bps, channels, sampleRate, duration);
@@ -108,19 +108,61 @@ void Discrepancy::SoundEngine::Generate(float duration)
 	unsigned char *data = (unsigned char *)_buffer + sizeof(WaveHeader);
 
 	char nbr[16];
-	for (int i = sizeof(WaveHeader); i < bufferSize; i += 2)
+
+	float frequency = 894.0f;// 432.0f;
+	int sampleSize = (bps / 8)*channels;
+	for (int iSample = 0; iSample < bufferSize; iSample += sampleSize)
 	{
-		data[i] = i % 200;// (unsigned char)(Math::Sin(i*0.5) * 127.0f) + 126U;
-		if ((i % 100) == 0)
+		float seconds = (float)iSample / ((float)sampleRate * (float)(bps/8) * channels);
+
+		//if ((iSample % (sampleRate * 2)) == 0 && seconds < 4.0f)
+		//	frequency += 50.0f;
+
+
+		int left = (int)(((Math::Sin(seconds * frequency * MathConstants::PI * 2.0f) * 0.5f) + 0.5f) * 255.0f * 0.5f);
+		int right = left;
+
+		switch (bps)
 		{
+		case 8:
+			data[iSample] = left;
+			data[iSample + 1] = right;
+			default:
+				break;
+		}
+
+		if ((iSample % 100) == 0)
+		{
+			float percent = ((float)iSample / (float)bufferSize)*100.0f;
+			int pct = (int)percent;
+
 			Memory::Memset(nbr, 16);
-			OutputDebugString(putnbr(i, nbr, 15));
+			OutputDebugString(putnbr(pct, nbr, 15));
 			OutputDebugStringW(L"/");
 			Memory::Memset(nbr, 16);
-			OutputDebugString(putnbr(bufferSize, nbr, 15));
+			OutputDebugString(putnbr(100, nbr, 15));
 			OutputDebugStringW(L"\n");
 		}
 	}
+
+	//for (int i = 0; i < bufferSize; i += 2)
+	//{
+	//	float seconds = (float)i;
+
+	//	data[i] = i % 200;// (unsigned char)(Math::Sin(i*0.5) * 127.0f) + 126U;
+	//	if ((i % 100) == 0)
+	//	{
+	//		float percent = ((float)i / (float)bufferSize)*100.0f;
+	//		int pct = (int)percent;
+
+	//		Memory::Memset(nbr, 16);
+	//		OutputDebugString(putnbr(pct, nbr, 15));
+	//		OutputDebugStringW(L"/");
+	//		Memory::Memset(nbr, 16);
+	//		OutputDebugString(putnbr(100, nbr, 15));
+	//		OutputDebugStringW(L"\n");
+	//	}
+	//}
 }
 
 void Discrepancy::SoundEngine::Play()

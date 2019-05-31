@@ -120,6 +120,7 @@
       <AssemblerListingLocation>$(OutDir)/BuildObjects/</AssemblerListingLocation>
       <XMLDocumentationFileName>$(OutDir)/BuildObjects/</XMLDocumentationFileName>
       <ProgramDataBaseFileName>$(OutDir)/BuildObjects/vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -153,6 +154,7 @@
       <AssemblerListingLocation>$(OutDir)/BuildObjects/</AssemblerListingLocation>
       <XMLDocumentationFileName>$(OutDir)/BuildObjects/</XMLDocumentationFileName>
       <ProgramDataBaseFileName>$(OutDir)/BuildObjects/vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -194,7 +196,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <BufferSecurityCheck>false</BufferSecurityCheck>
       <ControlFlowGuard>false</ControlFlowGuard>
-      <FloatingPointModel>Fast</FloatingPointModel>
+      <FloatingPointModel>Precise</FloatingPointModel>
       <WholeProgramOptimization>true</WholeProgramOptimization>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <CallingConvention>FastCall</CallingConvention>
@@ -217,6 +219,7 @@
       <AssemblerListingLocation>$(OutDir)/BuildObjects/</AssemblerListingLocation>
       <XMLDocumentationFileName>$(OutDir)/BuildObjects/</XMLDocumentationFileName>
       <ProgramDataBaseFileName>$(OutDir)/BuildObjects/vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -275,7 +278,7 @@
       <ControlFlowGuard>false</ControlFlowGuard>
       <FloatingPointExceptions>false</FloatingPointExceptions>
       <CompileAs>CompileAsCpp</CompileAs>
-      <FloatingPointModel>Fast</FloatingPointModel>
+      <FloatingPointModel>Precise</FloatingPointModel>
       <StructMemberAlignment>1Byte</StructMemberAlignment>
       <CallingConvention>FastCall</CallingConvention>
       <EnableParallelCodeGeneration>false</EnableParallelCodeGeneration>
@@ -294,6 +297,7 @@
       <AssemblerListingLocation>$(OutDir)/BuildObjects/</AssemblerListingLocation>
       <XMLDocumentationFileName>$(OutDir)/BuildObjects/</XMLDocumentationFileName>
       <ProgramDataBaseFileName>$(OutDir)/BuildObjects/vc$(PlatformToolsetVersion).pdb</ProgramDataBaseFileName>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -341,6 +345,13 @@
     </BuildLog>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="dependencies\gl\glcorearb.h" />
+    <ClInclude Include="dependencies\gl\glext.h" />
+    <ClInclude Include="dependencies\gl\glxext.h" />
+    <ClInclude Include="dependencies\gl\wgl.h" />
+    <ClInclude Include="dependencies\gl\wglext.h" />
+    <ClInclude Include="dependencies\khr\khrplatform.h" />
+    <ClInclude Include="dependencies\SSEMaths\sse_mathfun.h" />
     <ClInclude Include="ShaderBuilt\ShaderBuilt.h" />
     <ClInclude Include="SMS.h" />
     <ClInclude Include="SoundEngine\SoundEngine.h" />

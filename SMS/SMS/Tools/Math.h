@@ -20,6 +20,7 @@ namespace Discrepancy
 		const float PI_2_SQRTPI = 1.12837916709551257390f;
 		const float SQRT2 = 1.41421356237309504880f;
 		const float SQRT1_2 = 0.707106781186547524401f;
+		const float EPS = 0.000001f;
 	};
 
 	namespace Math
