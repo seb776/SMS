@@ -75,18 +75,18 @@
     <LibraryPath>$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86;$(SolutionDir)$(Platform)\$(Configuration)\;</LibraryPath>
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);./dependencies/</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);./dependencies/;./;</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>false</LinkIncremental>
     <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64;$(SolutionDir)$(Platform)\$(Configuration)\</LibraryPath>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);./dependencies/</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);./dependencies/;./;</IncludePath>
     <IntDir>$(SolutionDir)$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <ReferencePath>$(VC_ReferencesPath_x86);C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\SDK\ScopeCppSDK\SDK\lib</ReferencePath>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);./dependencies/;..\GlewStatic\GL\include</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);./dependencies/;./;..\GlewStatic\GL\include</IncludePath>
     <GenerateManifest>false</GenerateManifest>
     <LibraryPath>$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86;$(SolutionDir)$(Platform)\$(Configuration)\;</LibraryPath>
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
@@ -96,7 +96,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64;$(SolutionDir)$(Platform)\$(Configuration)\</LibraryPath>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);./dependencies/;</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);./dependencies/;./;</IncludePath>
     <GenerateManifest>false</GenerateManifest>
     <EmbedManifest>false</EmbedManifest>
     <IntDir>$(SolutionDir)$(Platform)\$(Configuration)\</IntDir>
@@ -354,9 +354,11 @@
     <ClInclude Include="dependencies\SSEMaths\sse_mathfun.h" />
     <ClInclude Include="ShaderBuilt\ShaderBuilt.h" />
     <ClInclude Include="SMS.h" />
+    <ClInclude Include="SoundEngine\Envelopes\ADSREnvelope.h" />
+    <ClInclude Include="SoundEngine\Models\WaveHeader.h" />
     <ClInclude Include="SoundEngine\SoundEngine.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="Tools\Debug.h" />
+    <ClInclude Include="Tools\Debug\Debug.h" />
     <ClInclude Include="Tools\FragmentShader.h" />
     <ClInclude Include="Tools\GLHelper.h" />
     <ClInclude Include="Tools\Math.h" />
@@ -368,8 +370,10 @@
   <ItemGroup>
     <ClCompile Include="ShaderBuilt\ShaderBuilt.cpp" />
     <ClCompile Include="SMS.cpp" />
+    <ClCompile Include="SoundEngine\Envelopes\ADSREnvelope.cpp" />
+    <ClCompile Include="SoundEngine\Models\WaveHeader.cpp" />
     <ClCompile Include="SoundEngine\SoundEngine.cpp" />
-    <ClCompile Include="Tools\Debug.cpp" />
+    <ClCompile Include="Tools\Debug\Debug.cpp" />
     <ClCompile Include="Tools\FltUsed.cpp" />
     <ClCompile Include="Tools\FragmentShader.cpp" />
     <ClCompile Include="Tools\GLHelper.cpp" />

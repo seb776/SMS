@@ -23,7 +23,7 @@ LRESULT CALLBACK ParametersWindow::WndProc(HWND hwnd, UINT msg, WPARAM wParam, L
 			if ((HWND)lParam == g_hWndBtn)
 			{
 				MessageBox(hwnd, "Button was clicked", "OK", MB_OK);
-				CreateOpenGLFullScreen(1280, 720);
+				CreateOpenGLFullScreen(1920, 1080);
 			}
 			break;
 		}

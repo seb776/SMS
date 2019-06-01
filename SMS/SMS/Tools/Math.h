@@ -36,6 +36,9 @@ namespace Discrepancy
 		}
 
 
+		float Lerp(float a, float b, float f);
+
+
 		float Fmod(float a, float b);
 
 		float Abs(float a);

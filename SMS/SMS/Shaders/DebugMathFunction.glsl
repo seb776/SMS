@@ -2,7 +2,7 @@ uniform vec2 resolution;
 uniform float time;
 
 uniform vec2 offset;
-uniform vec2 scale = vec2(10.0, 5.0);
+uniform vec2 scale = vec2(2.0, 2.0);
 uniform vec4 minmax = vec4(2.0);
 uniform const int CURVE_CNT = 1;
 

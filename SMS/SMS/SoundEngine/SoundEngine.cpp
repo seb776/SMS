@@ -1,107 +1,48 @@
-﻿#include "../Tools/MeanLeanWindows.h"
+﻿#include <Tools/MeanLeanWindows.h>
 #include <MMSystem.h>
-#include "../Tools/Memory.h"
-#include "../Tools/Math.h"
+
+#include <Tools/Memory.h>
+#include <Tools/Math.h>
+#include <Tools/Debug/Debug.h>
+
 #include "SoundEngine.h"
+#include "Models/WaveHeader.h"
+#include "Envelopes/ADSREnvelope.h"
 
 using namespace Discrepancy;
+using namespace Discrepancy::Synthesizer;
 
-#define SOUND_BUFFER_SIZE (8000 * 8)
-
-struct WaveHeader
-{
-	DWORD chunkID;       // 0x46464952 "RIFF" in little endian
-	DWORD chunkSize;     // 4 + (8 + subChunk1Size) + (8 + subChunk2Size)
-	DWORD format;        // 0x45564157 "WAVE" in little endian
-
-	DWORD subChunk1ID;   // 0x20746d66 "fmt " in little endian
-	DWORD subChunk1Size; // 16 for PCM
-	WORD  audioFormat;   // 1 for PCM, 3 fot EEE floating point , 7 for μ-law
-	WORD  numChannels;   // 1 for mono, 2 for stereo
-	DWORD sampleRate;    // 8000, 22050, 44100, etc...
-	DWORD byteRate;      // sampleRate * numChannels * bitsPerSample/8
-	WORD  blockAlign;    // numChannels * bitsPerSample/8
-	WORD  bitsPerSample; // number of bits (8 for 8 bits, etc...)
-
-	DWORD subChunk2ID;   // 0x61746164 "data" in little endian
-	DWORD subChunk2Size; // numSamples * numChannels * bitsPerSample/8 (this is the actual data size in bytes)
-};
-
-// Help
+// Useful links
+// https://docs.microsoft.com/en-us/previous-versions//dd743863(v=vs.85)
 // Sound https://stackoverflow.com/questions/1451606/programably-make-and-play-a-sound-through-speakers-c
 // http://soundfile.sapp.org/doc/WaveFormat/
+// https://www.youtube.com/watch?v=tgamhuQnOkM
+//
 
-Discrepancy::SoundEngine::SoundEngine() :
+Discrepancy::Synthesizer::SoundEngine::SoundEngine() :
 	_buffer(nullptr)
 {
 
 }
 
-Discrepancy::SoundEngine::~SoundEngine()
+Discrepancy::Synthesizer::SoundEngine::~SoundEngine()
 {
 	if (_buffer != nullptr)
 		Memory::HeapFree(_buffer);
 }
 
-// bps = bit per sample
-// numCh = numChannels
-// 
-void GenerateWaveHeader(void *soundBuf, unsigned int bufferSize, int bps, int numCh, int sampleRate)
-{
-	WaveHeader *header = (WaveHeader*)soundBuf;
-	char *data = (char*)soundBuf + sizeof(WaveHeader); //jumps to beginning of data
-
-	int subChunk1Size = 16; // 16 for PCM
-	int subChunk2Size = bufferSize - sizeof(WaveHeader);
-
-	header->chunkID = 0x46464952;       // 0x46464952 "RIFF" in little endian
-	header->chunkSize = 4 + (8 + subChunk1Size) + (8 + subChunk2Size);     // 4 + (8 + subChunk1Size) + (8 + subChunk2Size)
-	header->format = 0x45564157;        // 0x45564157 "WAVE" in little endian
-
-	header->subChunk1ID = 0x20746d66;   // 0x20746d66 "fmt " in little endian
-	header->subChunk1Size = subChunk1Size; // 16 for PCM
-	header->audioFormat = 1;   // 1 for PCM, 3 fot EEE floating point , 7 for μ-law
-	header->numChannels = numCh;   // 1 for mono, 2 for stereo
-	header->sampleRate = sampleRate;    // 8000, 22050, 44100, etc...
-	header->byteRate = sampleRate * header->numChannels * bps / 8;      // sampleRate * numChannels * bitsPerSample/8
-	header->blockAlign = header->numChannels * bps / 8;    // numChannels * bitsPerSample/8
-	header->bitsPerSample = bps; // number of bits (8 for 8 bits, etc...)
-
-	header->subChunk2ID = 0x61746164;   // 0x61746164 "data" in little endian
-	header->subChunk2Size = subChunk2Size;// 7000; // numSamples * numChannels * bitsPerSample/8 (this is the actual data size in bytes)
-
-
-}
-
-// does not take WaveHeader into account
-int CalculateBufferSize(int bps, int numCh, int sampleRate, float duration)
-{
-	int bufferSize = numCh * (bps / 8)*sampleRate*(int)Math::Ceil(duration);
-	return bufferSize;
-}
-
-char *putnbr(int nbr, char *buf, int size)
-{
-	int i;
-	for (i = 0; nbr > 0 && i < size; nbr /= 10, ++i)
-	{
-		buf[(size - 1) - i] = '0' + nbr % 10;
-	}
-	return &(buf[(size)-i]);
-}
-
-void Discrepancy::SoundEngine::Generate(float duration)
+void Discrepancy::Synthesizer::SoundEngine::Generate(float duration)
 {
 	int bps = 8;
-	int sampleRate = 22050;
+	int sampleRate = 44100;
 	int channels = 2;
 
-	int bufferSize = CalculateBufferSize(bps, channels, sampleRate, duration);
+	int bufferSize = WaveUtils::CalculateBufferSize(bps, channels, sampleRate, duration);
 
 	_buffer = Memory::HeapAlloc(bufferSize + sizeof(WaveHeader));
 	Memory::Memset((char*)_buffer, bufferSize);
 
-	GenerateWaveHeader(_buffer, bufferSize, bps, channels, sampleRate);
+	WaveUtils::GenerateWaveHeader(_buffer, bufferSize, bps, channels, sampleRate);
 
 
 	WaveHeader *header = (WaveHeader*)_buffer;
@@ -109,51 +50,60 @@ void Discrepancy::SoundEngine::Generate(float duration)
 
 	char nbr[16];
 
-	float frequency = 110.0f;
+	float frequency = 440.0f;
 	int sampleSize = (bps / 8)*channels;
-	for (int iSample = 0; iSample < bufferSize; iSample += sampleSize)
-	{
-		float seconds = (float)iSample / ((float)sampleRate * (float)(bps / 8) * channels);
-
-		if ((iSample % (sampleRate)) == 0 && seconds < 4.0f)
-			frequency += 25.0f;
-
-
-		//int left = (int)(((Math::Sin(seconds * frequency * MathConstants::PI * 2.0f) * 0.5f) + 0.5f) * 255.0f * 0.5f);
-		//int right = left;
-
-		int left = (int)((Math::Fmod(seconds * frequency, 1.0f)*2.0f - 1.0f)*255.0f);
-		int right = left;
-
-		switch (bps)
+	float volume = 0.7f;
+	Synthesizer::ADSREnvelope envelope = Synthesizer::ADSREnvelope(0.0f, 0.05f, 0.05f, 0.1f, 0.05f, 1.0f, 0.7f);
+		for (int iSample = 0; iSample < bufferSize; iSample += sampleSize)
 		{
-		case 8:
-			data[iSample] = left;
-			data[iSample + 1] = right;
-		default:
-			break;
-		}
+			float seconds = (float)iSample / ((float)sampleRate * (float)(bps / 8) * channels);
 
-		if ((iSample % 100) == 0)
-		{
-			float percent = ((float)iSample / (float)bufferSize)*100.0f;
-			int pct = (int)percent;
+			//if ((iSample % (sampleRate)) == 0 && seconds < 4.0f)
+			//	frequency += 25.0f;
 
-			Memory::Memset(nbr, 16);
-			OutputDebugString(putnbr(pct, nbr, 15));
-			OutputDebugStringW(L"/");
-			Memory::Memset(nbr, 16);
-			OutputDebugString(putnbr(100, nbr, 15));
-			OutputDebugStringW(L"\n");
+
+			int left = (int)(((Math::Sin(seconds * frequency * MathConstants::PI * 2.0f) * 0.5f) + 0.5f) * 255.0f);//  *envelope.GetAmplitude(seconds) * volume);
+			int right = left;
+
+
+			//int left = (int)((Math::Fmod(seconds * frequency, 1.0f))*255.0f * envelope.GetAmplitude(seconds) * volume);
+			//int right = left;
+
+			switch (bps)
+			{
+			case 8:
+				data[iSample] = left;
+				data[iSample + 1] = right;
+			default:
+				break;
+			}
+
+			if ((iSample % 100) == 0)
+			{
+				float percent = ((float)iSample / (float)bufferSize)*100.0f;
+				int pct = (int)percent;
+
+				Memory::Memset(nbr, 16);
+				OutputDebugString(putnbr(pct, nbr, 15));
+				OutputDebugStringW(L"/");
+				Memory::Memset(nbr, 16);
+				OutputDebugString(putnbr(100, nbr, 15));
+				OutputDebugStringW(L"\n");
+			}
 		}
-	}
 
 
 }
 
-void Discrepancy::SoundEngine::Play()
+void Discrepancy::Synthesizer::SoundEngine::Play()
 {
 	LPCSTR soundBuf = (LPCSTR)_buffer;
 
+	
 	PlaySound(soundBuf, NULL, SND_MEMORY | SND_ASYNC);
+}
+
+void Discrepancy::Synthesizer::SoundEngine::Stop()
+{
+	PlaySound(NULL, NULL, SND_MEMORY | SND_ASYNC);
 }

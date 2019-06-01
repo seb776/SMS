@@ -4,14 +4,18 @@
 
 namespace Discrepancy
 {
-	class SoundEngine
+	namespace Synthesizer
 	{
-		void *_buffer;
-	public:
-		SoundEngine();
-		~SoundEngine();
+		class SoundEngine
+		{
+			void *_buffer;
+		public:
+			SoundEngine();
+			~SoundEngine();
 
-		void Generate(float duration);
-		void Play();
-	};
+			void Generate(float duration);
+			void Play();
+			void Stop();
+		};
+	}
 }

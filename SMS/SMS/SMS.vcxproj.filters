@@ -53,9 +53,6 @@
     <ClInclude Include="ShaderBuilt\ShaderBuilt.h">
       <Filter>Header Files\ShaderBuilt</Filter>
     </ClInclude>
-    <ClInclude Include="Tools\Debug.h">
-      <Filter>Header Files\Tools</Filter>
-    </ClInclude>
     <ClInclude Include="Tools\Math.h">
       <Filter>Header Files\Tools</Filter>
     </ClInclude>
@@ -86,6 +83,15 @@
     <ClInclude Include="dependencies\khr\khrplatform.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SoundEngine\Envelopes\ADSREnvelope.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundEngine\Models\WaveHeader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tools\Debug\Debug.h">
+      <Filter>Header Files\Tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SMS.cpp">
@@ -109,9 +115,6 @@
     <ClCompile Include="Tools\FltUsed.cpp">
       <Filter>Source Files\Tools</Filter>
     </ClCompile>
-    <ClCompile Include="Tools\Debug.cpp">
-      <Filter>Source Files\Tools</Filter>
-    </ClCompile>
     <ClCompile Include="Tools\Math.cpp">
       <Filter>Source Files\Tools</Filter>
     </ClCompile>
@@ -119,6 +122,15 @@
       <Filter>Source Files\Tools</Filter>
     </ClCompile>
     <ClCompile Include="SoundEngine\SoundEngine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundEngine\Envelopes\ADSREnvelope.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Tools\Debug\Debug.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundEngine\Models\WaveHeader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

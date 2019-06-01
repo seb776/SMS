@@ -4,6 +4,11 @@
 
 using namespace Discrepancy;
 
+float Math::Lerp(float a, float b, float f)
+{
+	return (a + f * (b - a));
+}
+
 float Math::Fmod(float a, float b)
 {
 	float div = a / b;
