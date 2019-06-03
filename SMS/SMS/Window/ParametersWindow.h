@@ -1,8 +1,6 @@
 #pragma once
 
-#include "AWin32Window.h"
-
-class ParametersWindow : public AWin32Window
+class ParametersWindow
 {
 public:
 	ParametersWindow(HINSTANCE hInstance);

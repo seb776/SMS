@@ -35,9 +35,6 @@
     <ClInclude Include="SMS.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Window\AWin32Window.h">
-      <Filter>Header Files\Window</Filter>
-    </ClInclude>
     <ClInclude Include="Window\ParametersWindow.h">
       <Filter>Header Files\Window</Filter>
     </ClInclude>
@@ -101,9 +98,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Window\ParametersWindow.cpp">
-      <Filter>Source Files\Window</Filter>
-    </ClCompile>
-    <ClCompile Include="Window\AWin32Window.cpp">
       <Filter>Source Files\Window</Filter>
     </ClCompile>
     <ClCompile Include="Tools\FragmentShader.cpp">
