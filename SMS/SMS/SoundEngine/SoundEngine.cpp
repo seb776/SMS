@@ -3,7 +3,7 @@
 
 #include <Tools/Memory.h>
 #include <Tools/Math.h>
-#include <Tools/Debug/Debug.h>
+#include <Tools/DebugTools/Debug.h>
 
 #include "SoundEngine.h"
 #include "Models/WaveHeader.h"
@@ -58,8 +58,8 @@ void Discrepancy::Synthesizer::SoundEngine::Generate(float duration)
 		{
 			float seconds = (float)iSample / ((float)sampleRate * (float)(bps / 8) * channels);
 
-			//if ((iSample % (sampleRate)) == 0 && seconds < 4.0f)
-			//	frequency += 25.0f;
+			if ((iSample % (sampleRate)) == 0 && seconds < 4.0f)
+				frequency += 25.0f;
 
 
 			int left = (int)(((Math::Sin(seconds * frequency * MathConstants::PI * 2.0f) * 0.5f) + 0.5f) * 255.0f);//  *envelope.GetAmplitude(seconds) * volume);

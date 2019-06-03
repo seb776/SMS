@@ -89,8 +89,11 @@
     <ClInclude Include="SoundEngine\Models\WaveHeader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Tools\Debug\Debug.h">
-      <Filter>Header Files\Tools</Filter>
+    <ClInclude Include="Tools\DebugTools\Debug.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Core.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -127,10 +130,13 @@
     <ClCompile Include="SoundEngine\Envelopes\ADSREnvelope.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Tools\Debug\Debug.cpp">
-      <Filter>Source Files\Tools</Filter>
-    </ClCompile>
     <ClCompile Include="SoundEngine\Models\WaveHeader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Tools\DebugTools\Debug.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Core.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
