@@ -1,3 +1,4 @@
+#include <windowsx.h>
 #include <Core/Core.h>
 
 #include "../Tools/MeanLeanWindows.h"
@@ -32,6 +33,7 @@ LRESULT CALLBACK ParametersWindow::WndProc(HWND hwnd, UINT msg, WPARAM wParam, L
 				MessageBox(hwnd, "Button was clicked", "OK", MB_OK);
 				// todo get parameters from window
 				Core::StartParameters startParams;
+				startParams.WindowFlags = GL_WINDOWFLAGS;
 				Core::RunOpenGLInWindow(startParams);
 			}
 			break;
@@ -105,7 +107,7 @@ void ParametersWindow::StartWindow()
 		_hInstance,
 		NULL
 	);
-
+	// https://docs.microsoft.com/en-us/windows/desktop/api/winuser/nf-winuser-createwindowa#remarks
 	g_hWndBtn = CreateWindow(
 		"BUTTON",  // Predefined class; Unicode assumed 
 		"OK",      // Button text 
@@ -119,6 +121,23 @@ void ParametersWindow::StartWindow()
 		(HINSTANCE)GetWindowLongPtr(hWnd, GWLP_HINSTANCE),
 		NULL);      // Pointer not needed.
 
+	HWND dropDown = CreateWindow(
+		"COMBOBOX",
+		"",
+		WS_TABSTOP | WS_VISIBLE | WS_CHILD | CBS_DROPDOWN | CBS_HASSTRINGS | WS_VSCROLL,
+		120,
+		10,
+		150,
+		100,
+		hWnd,
+		NULL,
+		(HINSTANCE)GetWindowLongPtr(hWnd, GWLP_HINSTANCE),
+		NULL);      // Pointer not needed.
+
+	ComboBox_AddItemData(dropDown, "test");
+	ComboBox_AddItemData(dropDown, "test2");
+	ComboBox_AddItemData(dropDown, "test3");
+	ComboBox_SetCurSel(dropDown, 0);
 	{
 		DWORD errorMessageID = ::GetLastError();
 		if (errorMessageID != 0)

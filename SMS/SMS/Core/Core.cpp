@@ -33,10 +33,10 @@ void Core::RunOpenGLInWindow(const StartParameters& startParams)
 
 	FragmentShader fs;
 
-	fs.Load(Pharma);
+	fs.Load(DebugMathFunction);
 
 	unsigned int shaderIdx = fs.Run();
-	overlay.Run();
+	//unsigned int shaderIdx = overlay.Run();
 
 	Synthesizer::ADSREnvelope envelope = Synthesizer::ADSREnvelope(1.0f, 0.1f, 0.1f, 1.0f, 0.1f, 1.0f, 0.7f);
 

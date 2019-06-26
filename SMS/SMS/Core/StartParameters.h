@@ -8,6 +8,10 @@ namespace Discrepancy
 	{
 		struct StartParameters
 		{
+			StartParameters() :
+				Width(1920), Height(1080), FramePerSecond(60.0f), WindowFlags(0)
+			{}
+
 			unsigned int Width;
 			unsigned int Height;
 

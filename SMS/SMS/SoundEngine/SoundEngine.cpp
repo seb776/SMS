@@ -63,7 +63,7 @@ void Discrepancy::Synthesizer::SoundEngine::Generate(float duration)
 
 
 			int right = (int)(((Math::Sin(seconds * frequency * MathConstants::PI * 2.0f) * 0.5f) + 0.5f) * 255.0f);//  *envelope.GetAmplitude(seconds) * volume);
-			int left = left;
+			int left = right;
 
 
 			//int left = (int)((Math::Fmod(seconds * frequency, 1.0f))*255.0f * envelope.GetAmplitude(seconds) * volume);
