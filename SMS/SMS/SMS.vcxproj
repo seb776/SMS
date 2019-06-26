@@ -345,7 +345,8 @@
     </BuildLog>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Core.h" />
+    <ClInclude Include="Core\Core.h" />
+    <ClInclude Include="Core\StartParameters.h" />
     <ClInclude Include="dependencies\gl\glcorearb.h" />
     <ClInclude Include="dependencies\gl\glext.h" />
     <ClInclude Include="dependencies\gl\glxext.h" />
@@ -354,13 +355,14 @@
     <ClInclude Include="dependencies\khr\khrplatform.h" />
     <ClInclude Include="dependencies\SSEMaths\sse_mathfun.h" />
     <ClInclude Include="ShaderBuilt\ShaderBuilt.h" />
-    <ClInclude Include="SMS.h" />
+    <ClInclude Include="Main.h" />
     <ClInclude Include="SoundEngine\Envelopes\ADSREnvelope.h" />
     <ClInclude Include="SoundEngine\Models\WaveHeader.h" />
     <ClInclude Include="SoundEngine\SoundEngine.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Tools\DebugTools\Debug.h" />
     <ClInclude Include="Tools\FragmentShader.h" />
+    <ClInclude Include="Tools\GDIHelper.h" />
     <ClInclude Include="Tools\GLHelper.h" />
     <ClInclude Include="Tools\Math.h" />
     <ClInclude Include="Tools\MeanLeanWindows.h" />
@@ -369,9 +371,10 @@
     <ClInclude Include="Window\ParametersWindow.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Core.cpp" />
+    <ClCompile Include="Core\Core.cpp" />
+    <ClCompile Include="Core\StartParameters.cpp" />
     <ClCompile Include="ShaderBuilt\ShaderBuilt.cpp" />
-    <ClCompile Include="SMS.cpp" />
+    <ClCompile Include="Main.cpp" />
     <ClCompile Include="SoundEngine\Envelopes\ADSREnvelope.cpp" />
     <ClCompile Include="SoundEngine\Models\WaveHeader.cpp" />
     <ClCompile Include="SoundEngine\SoundEngine.cpp" />

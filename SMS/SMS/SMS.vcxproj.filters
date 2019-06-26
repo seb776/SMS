@@ -32,9 +32,6 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SMS.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Window\AWin32Window.h">
       <Filter>Header Files\Window</Filter>
     </ClInclude>
@@ -92,14 +89,20 @@
     <ClInclude Include="Tools\DebugTools\Debug.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Core.h">
+    <ClInclude Include="Main.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tools\GDIHelper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\Core.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\StartParameters.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="SMS.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Window\ParametersWindow.cpp">
       <Filter>Source Files\Window</Filter>
     </ClCompile>
@@ -136,7 +139,13 @@
     <ClCompile Include="Tools\DebugTools\Debug.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Core.cpp">
+    <ClCompile Include="Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\Core.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\StartParameters.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

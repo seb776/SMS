@@ -3,7 +3,8 @@
 
 int Discrepancy::Synthesizer::WaveUtils::CalculateBufferSize(int bps, int numCh, int sampleRate, float duration)
 {
-	int bufferSize = numCh * (bps / 8)*sampleRate*(int)Math::Ceil(duration);
+	int bufferSize = sizeof(WaveHeader) +						// Header
+		numCh * (bps / 8)*sampleRate*(int)Math::Ceil(duration); // Data
 	return bufferSize;
 }
 

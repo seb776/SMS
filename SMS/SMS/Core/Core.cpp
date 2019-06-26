@@ -4,29 +4,19 @@
 #include <ShaderBuilt/ShaderBuilt.h>
 #include <SoundEngine/Envelopes/ADSREnvelope.h>
 #include <Tools/GLHelper.h>
+#include <Tools/GDIHelper.h>
 #include "Core.h"
 
 using namespace Discrepancy;
 
-// Run in windowed mode in debug but maximized in release.
-#ifndef DEBUG
-#define GL_WINDOWFLAGS (WS_VISIBLE | WS_POPUP | WS_MAXIMIZE)
-#else
-#define GL_WINDOWFLAGS (WS_VISIBLE | WS_POPUP)
-#endif
-
-const static PIXELFORMATDESCRIPTOR pfd = { 0, 0, PFD_SUPPORT_OPENGL | PFD_DOUBLEBUFFER | PFD_DIRECT3D_ACCELERATED, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-
-int initOpenGL();
 
 
-void Core::CreateOpenGLFullScreen(int width, int height)
+void Core::RunOpenGLInWindow(const StartParameters& startParams)
 {
-	//if (ChangeDisplaySettings(&screenSettings, CDS_FULLSCREEN) != DISP_CHANGE_SUCCESSFUL) return -1;
 	ShowCursor(0);
-	HDC hDC = GetDC(CreateWindowExA(WS_EX_APPWINDOW, "static", 0, GL_WINDOWFLAGS, 0, 0, width, height, 0, 0, 0, 0));
+	HDC hDC = GetDC(CreateWindowExA(WS_EX_APPWINDOW, "static", 0, startParams.WindowFlags, 0, 0, startParams.Width, startParams.Height, 0, 0, 0, 0));
 	SetPixelFormat(hDC, ChoosePixelFormat(hDC, &pfd), &pfd);
-	wglCreateContext(hDC);
+
 	wglMakeCurrent(hDC, wglCreateContext(hDC));
 
 	initOpenGL();
@@ -89,7 +79,7 @@ void Core::CreateOpenGLFullScreen(int width, int height)
 		glUniform1f(myUniformLocation, accTime);
 
 		GLint myResLocation = glGetUniformLocation((GLuint)shaderIdx, "resolution");
-		glUniform2f(myResLocation, (float)width, (float)height);
+		glUniform2f(myResLocation, (float)startParams.Width, (float)startParams.Height);
 
 
 		glRects(-1, -1, 1, 1);

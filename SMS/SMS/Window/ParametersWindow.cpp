@@ -1,4 +1,4 @@
-#include <Core.h>
+#include <Core/Core.h>
 
 #include "../Tools/MeanLeanWindows.h"
 #include "ParametersWindow.h"
@@ -7,6 +7,13 @@
 using namespace Discrepancy;
 
 HWND ParametersWindow::g_hWndBtn;
+
+// Run in windowed mode in debug but maximized in release.
+#ifndef DEBUG
+#define GL_WINDOWFLAGS (WS_VISIBLE | WS_POPUP | WS_MAXIMIZE)
+#else
+#define GL_WINDOWFLAGS (WS_VISIBLE | WS_POPUP)
+#endif
 
 LRESULT CALLBACK ParametersWindow::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
@@ -23,7 +30,9 @@ LRESULT CALLBACK ParametersWindow::WndProc(HWND hwnd, UINT msg, WPARAM wParam, L
 			if ((HWND)lParam == g_hWndBtn)
 			{
 				MessageBox(hwnd, "Button was clicked", "OK", MB_OK);
-				Core::CreateOpenGLFullScreen(1920, 1080);
+				// todo get parameters from window
+				Core::StartParameters startParams;
+				Core::RunOpenGLInWindow(startParams);
 			}
 			break;
 		}

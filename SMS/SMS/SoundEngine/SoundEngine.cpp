@@ -54,7 +54,7 @@ void Discrepancy::Synthesizer::SoundEngine::Generate(float duration)
 	int sampleSize = (bps / 8)*channels;
 	float volume = 0.7f;
 	Synthesizer::ADSREnvelope envelope = Synthesizer::ADSREnvelope(0.0f, 0.05f, 0.05f, 0.1f, 0.05f, 1.0f, 0.7f);
-		for (int iSample = 0; iSample < bufferSize; iSample += sampleSize)
+		for (int iSample = 0; iSample < (bufferSize - sizeof(WaveHeader)); iSample += sampleSize)
 		{
 			float seconds = (float)iSample / ((float)sampleRate * (float)(bps / 8) * channels);
 
@@ -62,8 +62,8 @@ void Discrepancy::Synthesizer::SoundEngine::Generate(float duration)
 				frequency += 25.0f;
 
 
-			int left = (int)(((Math::Sin(seconds * frequency * MathConstants::PI * 2.0f) * 0.5f) + 0.5f) * 255.0f);//  *envelope.GetAmplitude(seconds) * volume);
-			int right = left;
+			int right = (int)(((Math::Sin(seconds * frequency * MathConstants::PI * 2.0f) * 0.5f) + 0.5f) * 255.0f);//  *envelope.GetAmplitude(seconds) * volume);
+			int left = left;
 
 
 			//int left = (int)((Math::Fmod(seconds * frequency, 1.0f))*255.0f * envelope.GetAmplitude(seconds) * volume);
