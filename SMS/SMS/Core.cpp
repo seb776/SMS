@@ -20,7 +20,7 @@ const static PIXELFORMATDESCRIPTOR pfd = { 0, 0, PFD_SUPPORT_OPENGL | PFD_DOUBLE
 int initOpenGL();
 
 
-void CreateOpenGLFullScreen(int width, int height)
+void Core::CreateOpenGLFullScreen(int width, int height)
 {
 	//if (ChangeDisplaySettings(&screenSettings, CDS_FULLSCREEN) != DISP_CHANGE_SUCCESSFUL) return -1;
 	ShowCursor(0);

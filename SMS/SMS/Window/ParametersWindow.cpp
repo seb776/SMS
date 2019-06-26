@@ -1,3 +1,5 @@
+#include <Core.h>
+
 #include "../Tools/MeanLeanWindows.h"
 #include "ParametersWindow.h"
 #include "../Tools/Memory.h"
@@ -5,8 +7,6 @@
 using namespace Discrepancy;
 
 HWND ParametersWindow::g_hWndBtn;
-
-void CreateOpenGLFullScreen(int width, int height);
 
 LRESULT CALLBACK ParametersWindow::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
@@ -23,7 +23,7 @@ LRESULT CALLBACK ParametersWindow::WndProc(HWND hwnd, UINT msg, WPARAM wParam, L
 			if ((HWND)lParam == g_hWndBtn)
 			{
 				MessageBox(hwnd, "Button was clicked", "OK", MB_OK);
-				CreateOpenGLFullScreen(1920, 1080);
+				Core::CreateOpenGLFullScreen(1920, 1080);
 			}
 			break;
 		}
