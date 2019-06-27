@@ -367,7 +367,6 @@
     <ClInclude Include="Tools\Math.h" />
     <ClInclude Include="Tools\MeanLeanWindows.h" />
     <ClInclude Include="Tools\Memory.h" />
-    <ClInclude Include="Window\AWin32Window.h" />
     <ClInclude Include="Window\ParametersWindow.h" />
   </ItemGroup>
   <ItemGroup>
@@ -384,7 +383,6 @@
     <ClCompile Include="Tools\GLHelper.cpp" />
     <ClCompile Include="Tools\Math.cpp" />
     <ClCompile Include="Tools\Memory.cpp" />
-    <ClCompile Include="Window\AWin32Window.cpp" />
     <ClCompile Include="Window\ParametersWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
