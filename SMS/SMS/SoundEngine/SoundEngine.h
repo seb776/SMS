@@ -13,7 +13,7 @@ namespace Discrepancy
 			SoundEngine();
 			~SoundEngine();
 
-			void Generate(float duration);
+			void Generate(float duration, float *progress);
 			void Play();
 			void Stop();
 		};

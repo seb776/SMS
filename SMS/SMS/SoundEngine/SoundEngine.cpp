@@ -31,7 +31,7 @@ Discrepancy::Synthesizer::SoundEngine::~SoundEngine()
 		Memory::HeapFree(_buffer);
 }
 
-void Discrepancy::Synthesizer::SoundEngine::Generate(float duration)
+void Discrepancy::Synthesizer::SoundEngine::Generate(float duration, float *progress)
 {
 	int bps = 8;
 	int sampleRate = 44100;
@@ -54,43 +54,47 @@ void Discrepancy::Synthesizer::SoundEngine::Generate(float duration)
 	int sampleSize = (bps / 8)*channels;
 	float volume = 0.7f;
 	Synthesizer::ADSREnvelope envelope = Synthesizer::ADSREnvelope(0.0f, 0.05f, 0.05f, 0.1f, 0.05f, 1.0f, 0.7f);
-		for (int iSample = 0; iSample < (bufferSize - sizeof(WaveHeader)); iSample += sampleSize)
+	for (int iSample = 0; iSample < (bufferSize - sizeof(WaveHeader)); iSample += sampleSize)
+	{
+		float seconds = (float)iSample / ((float)sampleRate * (float)(bps / 8) * channels);
+
+		if ((iSample % (sampleRate)) == 0 && seconds < 4.0f)
+			frequency += 25.0f;
+
+
+		int right = (int)(((Math::Sin(seconds * frequency * MathConstants::PI * 2.0f) * 0.5f) + 0.5f) * 255.0f);//  *envelope.GetAmplitude(seconds) * volume);
+		int left = right;
+
+
+		//int left = (int)((Math::Fmod(seconds * frequency, 1.0f))*255.0f * envelope.GetAmplitude(seconds) * volume);
+		//int right = left;
+
+		switch (bps)
 		{
-			float seconds = (float)iSample / ((float)sampleRate * (float)(bps / 8) * channels);
-
-			if ((iSample % (sampleRate)) == 0 && seconds < 4.0f)
-				frequency += 25.0f;
-
-
-			int right = (int)(((Math::Sin(seconds * frequency * MathConstants::PI * 2.0f) * 0.5f) + 0.5f) * 255.0f);//  *envelope.GetAmplitude(seconds) * volume);
-			int left = right;
-
-
-			//int left = (int)((Math::Fmod(seconds * frequency, 1.0f))*255.0f * envelope.GetAmplitude(seconds) * volume);
-			//int right = left;
-
-			switch (bps)
-			{
-			case 8:
-				data[iSample] = left;
-				data[iSample + 1] = right;
-			default:
-				break;
-			}
-
-			if ((iSample % 100) == 0)
-			{
-				float percent = ((float)iSample / (float)bufferSize)*100.0f;
-				int pct = (int)percent;
-
-				Memory::Memset(nbr, 16);
-				OutputDebugString(putnbr(pct, nbr, 15));
-				OutputDebugStringW(L"/");
-				Memory::Memset(nbr, 16);
-				OutputDebugString(putnbr(100, nbr, 15));
-				OutputDebugStringW(L"\n");
-			}
+		case 8:
+			data[iSample] = left;
+			data[iSample + 1] = right;
+		default:
+			break;
 		}
+
+		float percent = ((float)iSample / (float)bufferSize)*100.0f;
+		if ((iSample % 100) == 0)
+		{
+			Sleep(1.0f);
+
+			int pct = (int)percent;
+
+			*progress = percent / 100.f;
+
+			Memory::Memset(nbr, 16);
+			OutputDebugString(putnbr(pct, nbr, 15));
+			OutputDebugStringW(L"/");
+			Memory::Memset(nbr, 16);
+			OutputDebugString(putnbr(100, nbr, 15));
+			OutputDebugStringW(L"\n");
+		}
+	}
 
 
 }
@@ -99,7 +103,7 @@ void Discrepancy::Synthesizer::SoundEngine::Play()
 {
 	LPCSTR soundBuf = (LPCSTR)_buffer;
 
-	
+
 	PlaySound(soundBuf, NULL, SND_MEMORY | SND_ASYNC);
 }
 

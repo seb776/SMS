@@ -1,8 +1,8 @@
 #pragma once
 
-#include "AWin32Window.h"
+#include <Tools/MeanLeanWindows.h>
 
-class ParametersWindow : public AWin32Window
+class ParametersWindow
 {
 public:
 	ParametersWindow(HINSTANCE hInstance);

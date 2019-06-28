@@ -50,8 +50,7 @@ LRESULT CALLBACK ParametersWindow::WndProc(HWND hwnd, UINT msg, WPARAM wParam, L
 
 ParametersWindow::~ParametersWindow(void) {}
 
-ParametersWindow::ParametersWindow(HINSTANCE hInstance) :
-	AWin32Window(hInstance)
+ParametersWindow::ParametersWindow(HINSTANCE hInstance)
 {
 
 }

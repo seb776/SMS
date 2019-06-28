@@ -387,6 +387,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\DebugMathFunction.glsl" />
+    <None Include="Shaders\Loading.glsl" />
     <None Include="Shaders\RetroReflect.glsl">
       <FileType>CppCode</FileType>
     </None>

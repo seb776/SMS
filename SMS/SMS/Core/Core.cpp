@@ -9,6 +9,55 @@
 
 using namespace Discrepancy;
 
+static bool g_finished = false;
+static float g_progress = 0.;
+
+static float g_width = 0.;
+static float g_height = 0.;
+
+void runLoadingScreen(HDC hDC)
+{
+	float accTime = 0.;
+	FragmentShader loadingShader;
+
+	loadingShader.Load(Loading);
+
+	unsigned int shaderIdx = loadingShader.Run();
+
+	GLint myTimeLocation = glGetUniformLocation((GLuint)shaderIdx, "time");
+	GLint myResLocation = glGetUniformLocation((GLuint)shaderIdx, "resolution");
+	GLint myProgressLocation = glGetUniformLocation((GLuint)shaderIdx, "progress");
+
+
+
+	float elapsedLastFrame = 0.;
+	while (!g_finished)
+	{
+		DWORD lastFrame = GetTickCount();
+
+		static MSG dummyMessage;
+		PeekMessageA(&dummyMessage, 0, 0, 0, 1); // Remove all Windows messages to prevent "Program not responding" dialog.
+
+		glUniform1f(myProgressLocation, g_progress);
+		glUniform1f(myTimeLocation, accTime);
+		glUniform2f(myResLocation, g_width, g_height);
+
+
+
+		glRects(-1, -1, 1, 1);
+		SwapBuffers(hDC);
+		elapsedLastFrame = (float)(GetTickCount() - lastFrame) / 1000.0f;
+		accTime += elapsedLastFrame;
+	}
+}
+
+DWORD WINAPI threadLoading(LPVOID lpParameter)
+{
+	auto soundEngine = (Synthesizer::SoundEngine*)lpParameter;
+	soundEngine->Generate(4.0, &g_progress);
+	g_finished = true;
+	return 0;
+}
 
 
 void Core::RunOpenGLInWindow(const StartParameters& startParams)
@@ -22,8 +71,18 @@ void Core::RunOpenGLInWindow(const StartParameters& startParams)
 	initOpenGL();
 
 	Synthesizer::SoundEngine soundEngine;
+	DWORD myThreadID;
+	HANDLE myHandle = CreateThread(0, 0, threadLoading, &soundEngine, 0, &myThreadID);
 
-	soundEngine.Generate(4.0);
+	g_width = startParams.Width;
+	g_height = startParams.Height;
+
+
+	runLoadingScreen(hDC);
+
+	
+
+
 
 	soundEngine.Play();
 
