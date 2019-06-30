@@ -19,9 +19,14 @@ void Memory::MemCpy(char *dst, const char *src, int size)
 void *Memory::HeapAlloc(unsigned int size)
 {
 	return (void*)::HeapAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY, (SIZE_T)size);
+	Discrepancy::Memory::AllocationCount++;
 }
 
 void Memory::HeapFree(void *ptr)
 {
 	::HeapFree(GetProcessHeap(), 0, (LPVOID)ptr);
+	Discrepancy::Memory::DeallocationCount++;
 }
+
+unsigned int Memory::AllocationCount = 0U;
+unsigned int Memory::DeallocationCount = 0U;

@@ -345,6 +345,7 @@
     </BuildLog>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Composition\VisualComposition.h" />
     <ClInclude Include="Core\Core.h" />
     <ClInclude Include="Core\StartParameters.h" />
     <ClInclude Include="dependencies\gl\glcorearb.h" />
@@ -367,6 +368,7 @@
     <ClInclude Include="Tools\Math.h" />
     <ClInclude Include="Tools\MeanLeanWindows.h" />
     <ClInclude Include="Tools\Memory.h" />
+    <ClInclude Include="Tools\Queue.h" />
     <ClInclude Include="Window\ParametersWindow.h" />
   </ItemGroup>
   <ItemGroup>

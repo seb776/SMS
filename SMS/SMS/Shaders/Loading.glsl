@@ -31,6 +31,27 @@ float drawRect(vec2 uv, float sz, float thick)
                  (isIn(abs(uv.y) - sz, -hth, hth) && isIn(abs(uv.x), 0., sz + hth))
                 );
 }
+vec3 drawBubbles(vec2 uv)
+{
+    int bCnt = 27;
+    float fCnt = float(bCnt);
+    float speed = .2;
+    vec3 col = vec3(153., 255., 153.)/255.;
+    vec3 acc;
+
+    
+    for (int i = 0; i < bCnt; ++i)
+    {
+        float fi = float(i);
+        float yPos =mod(speed*time+fi*.1015, 2.)-0.5;
+        vec2 pos = vec2(mod(fi/fCnt, 0.12)*4.-0.3+yPos*0.2*sin(time*3.14), yPos);
+        
+        float d = distance(uv, pos);
+        if (isIn(d, 0.008, 0.01))
+            acc += col*0.5*sat(uv.y+0.2);
+    }
+    return acc;
+}
 
 vec3 drawJauge(vec2 uv, float level)
 {
@@ -48,14 +69,14 @@ vec3 drawJauge(vec2 uv, float level)
     
     float cGrad = pow(uv.x+0.5,.5);
     
-    float power = 1.3;
+    float power = 2.2;
     vec3 light = vec3(204., 255., 204.)/255.0;
     light.x = pow(light.x, power);
     light.y = pow(light.x, power);
     light.z = pow(light.x, power);
     
     col = mix(vec3(204., 51., 153.)/255.0*0.6, light, cGrad) * (2.*uv.y+0.9);
-    return abs(col*sat(coef));
+    return abs(col*sat(coef))+drawBubbles(uv)*coef;
 }
 
 void main(void)

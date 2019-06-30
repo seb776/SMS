@@ -1,13 +1,17 @@
-#include "Tools/MeanLeanWindows.h"
+#include <Tools/MeanLeanWindows.h>
+#include <Composition/VisualComposition.h>
+
 #include <SoundEngine/SoundEngine.h>
 #include <Tools/FragmentShader.h>
 #include <ShaderBuilt/ShaderBuilt.h>
 #include <SoundEngine/Envelopes/ADSREnvelope.h>
 #include <Tools/GLHelper.h>
 #include <Tools/GDIHelper.h>
+
 #include "Core.h"
 
 using namespace Discrepancy;
+using namespace Composition;
 
 static bool g_finished = false;
 static float g_progress = 0.;
@@ -59,9 +63,27 @@ DWORD WINAPI threadLoading(LPVOID lpParameter)
 	return 0;
 }
 
+VisualComposition *GenerateVisualCompo()
+{
+	VisualComposition *visualCompo = (decltype(visualCompo))Memory::HeapAlloc(sizeof(*visualCompo));
+
+	visualCompo->Init(5);
+
+	auto channelsContent = visualCompo->GetChannelsContent();
+
+	auto frame = Memory::HeapAlloc<Frame<VisualFrameContent>>();
+	//frame->Content
+	//channelsContent[0].Frames.Push()
+
+	return visualCompo;
+}
+
 
 void Core::RunOpenGLInWindow(const StartParameters& startParams)
 {
+	VisualComposition *visualCompo = GenerateVisualCompo();
+
+	Memory::HeapFree(visualCompo);
 	ShowCursor(0);
 	HDC hDC = GetDC(CreateWindowExA(WS_EX_APPWINDOW, "static", 0, startParams.WindowFlags, 0, 0, startParams.Width, startParams.Height, 0, 0, 0, 0));
 	SetPixelFormat(hDC, ChoosePixelFormat(hDC, &pfd), &pfd);
