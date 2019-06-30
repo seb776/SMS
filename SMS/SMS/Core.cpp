@@ -4,6 +4,7 @@
 #include <ShaderBuilt/ShaderBuilt.h>
 #include <SoundEngine/Envelopes/ADSREnvelope.h>
 #include <Tools/GLHelper.h>
+#include <Composition/VisualComposition.h>
 #include "Core.h"
 
 using namespace Discrepancy;
@@ -19,52 +20,11 @@ const static PIXELFORMATDESCRIPTOR pfd = { 0, 0, PFD_SUPPORT_OPENGL | PFD_DOUBLE
 
 int initOpenGL();
 
-struct DemoLaunchParameters
-{
-public:
-	DemoLaunchParameters() :
-		DemoLaunchParameters(1024,768)
-	{
-	}
-
-	DemoLaunchParameters(int resX, int resY) :
-		ResolutionX(resX), ResolutionY(resY)
-	{
-	}
-
-	int ResolutionX;
-	int ResolutionY;
-
-};
-
-Composition GenerateDebugComposition()
-{
-
-}
-
-Composition GenerateDemoComposition()
-{
-
-}
-
-void Discrepancy::Core::StartDemo(DemoLaunchParameters params)
-{
-	initOpenGL();
-
-	Synthesizer::SoundEngine soundEngine;
-
-	soundEngine.Generate(4.0);
-
-	soundEngine.Play();
-
-	CompositionEngine compositionEngine;
-
-	var demoComp = GenerateDemoComposition();
-	compositionEngine.LoadComposition(demoComp);
-}
 
 void Discrepancy::Core::CreateOpenGLFullScreen(int width, int height)
 {
+	VisualComposition
+
 	//if (ChangeDisplaySettings(&screenSettings, CDS_FULLSCREEN) != DISP_CHANGE_SUCCESSFUL) return -1;
 	ShowCursor(0);
 	HDC hDC = GetDC(CreateWindowExA(WS_EX_APPWINDOW, "static", 0, GL_WINDOWFLAGS, 0, 0, width, height, 0, 0, 0, 0));
