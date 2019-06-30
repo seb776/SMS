@@ -7,6 +7,7 @@
 #include <SoundEngine/Envelopes/ADSREnvelope.h>
 #include <Tools/GLHelper.h>
 #include <Tools/GDIHelper.h>
+#include <new>
 
 #include "Core.h"
 
@@ -63,6 +64,7 @@ DWORD WINAPI threadLoading(LPVOID lpParameter)
 	return 0;
 }
 
+
 VisualComposition *GenerateVisualCompo()
 {
 	VisualComposition *visualCompo = (decltype(visualCompo))Memory::HeapAlloc(sizeof(*visualCompo));
@@ -71,7 +73,11 @@ VisualComposition *GenerateVisualCompo()
 
 	auto channelsContent = visualCompo->GetChannelsContent();
 
-	auto frame = Memory::HeapAlloc<Frame<VisualFrameContent>>();
+	auto shaderLoading = NEW(FragmentShader)();
+	auto frameLoading = NEW(VisualFrame)(shaderLoading, true, false, 0.f, -1.0f);
+
+	shaderLoading->Load(Loading);
+
 	//frame->Content
 	//channelsContent[0].Frames.Push()
 
@@ -83,6 +89,11 @@ void Core::RunOpenGLInWindow(const StartParameters& startParams)
 {
 	VisualComposition *visualCompo = GenerateVisualCompo();
 
+	visualCompo->Lock();
+	while (false)
+	{
+		visualCompo->ExecuteComposition(0.f);
+	}
 	Memory::HeapFree(visualCompo);
 	ShowCursor(0);
 	HDC hDC = GetDC(CreateWindowExA(WS_EX_APPWINDOW, "static", 0, startParams.WindowFlags, 0, 0, startParams.Width, startParams.Height, 0, 0, 0, 0));

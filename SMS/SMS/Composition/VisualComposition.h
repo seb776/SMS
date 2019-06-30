@@ -14,21 +14,53 @@ namespace Discrepancy
 			FragmentShader *Shader;
 		};
 
-		template<typename T>
-		class Frame
+		enum EVisualFrameType
+		{
+			FRAGMENT_SHADER = 0
+		};
+
+		//template<typename T>
+		class VisualFrame
 		{
 		public:
+
+			bool ManualEnd; // ignores EndTime and take a callback insted to set a bool
+			bool HasEnded;
+
 			float StartTime;
 			float EndTime;
-			T *Content;
+			void  *Content;
+			EVisualFrameType FrameType;
 		public:
-			void(*Render)(unsigned int srcTex, unsigned int dstTex, float curTime);
+
+			void Render()
+			{
+				switch (FrameType)
+				{
+				case EVisualFrameType::FRAGMENT_SHADER:
+					((FragmentShader *)Content)->Render(0, 0, 0.f, nullptr);
+					break;
+				default:
+					break;
+				}
+			}
+
+			VisualFrame() = delete;
+
+			template <typename T>
+			VisualFrame(T content, bool manualEnd, bool hasEnded, float startTime, float endTime) :
+				ManualEnd(manualEnd), HasEnded(hasEnded),
+				StartTime(startTime), EndTime(endTime),
+				Content(content)
+			{
+
+			}
 		};
 
 		class VisualChannel
 		{
 		public:
-			Tools::Queue<Frame<VisualFrameContent> *> Frames;
+			Tools::Queue<VisualFrame *> Frames;
 		};
 
 		class VisualComposition

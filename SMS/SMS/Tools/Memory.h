@@ -19,6 +19,8 @@ namespace Discrepancy
 	}
 }
 
+#define NEW(type) new(Memory::HeapAlloc<type>()) type
+
 //void* operator new(size_t sz);
 //void operator delete(void* ptr) noexcept;
 
