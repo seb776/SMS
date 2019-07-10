@@ -31,6 +31,8 @@ namespace Discrepancy
 			float EndTime;
 			void  *Content;
 			EVisualFrameType FrameType;
+			GLuint _frameBuffer;
+			GLuint _renderTexture;
 		public:
 
 			void Render(unsigned int srcBuffer, unsigned int dstBuffer, float curTime)
@@ -43,7 +45,8 @@ namespace Discrepancy
 					params.CurrentTime = curTime;
 					params.DestinationTexture = dstBuffer;
 					params.SourceTexture = srcBuffer;
-					((FragmentShader *)Content)->Render(params);
+
+					((FragmentShader *)Content)->Render(params, _renderTexture, _frameBuffer);
 					break;
 				default:
 					break;
@@ -53,11 +56,27 @@ namespace Discrepancy
 			VisualFrame() = delete;
 
 			template <typename T>
-			VisualFrame(T content, bool manualEnd, bool hasEnded, float startTime, float endTime) :
+			VisualFrame(T content, bool manualEnd, bool hasEnded, float startTime, float endTime, GLuint frameBuffer) :
 				ManualEnd(manualEnd), HasEnded(hasEnded),
 				StartTime(startTime), EndTime(endTime),
-				Content(content)
+				Content(content),
+				_frameBuffer(frameBuffer), _renderTexture(0U)
 			{
+				 
+
+				glGenTextures(1, &_renderTexture);
+
+				// "Bind" the newly created texture : all future texture functions will modify this texture
+				glBindTexture(GL_TEXTURE_2D, _renderTexture);
+
+				// Give an empty image to OpenGL ( the last "0" )
+				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 1024, 768, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
+
+				// Poor filtering. Needed !
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+
 
 			}
 		};
@@ -121,6 +140,20 @@ namespace Discrepancy
 
 			void ExecuteComposition(float curTime)
 			{
+				DWORD lastFrame = GetTickCount();
+
+				GLint myUniformLocation = glGetUniformLocation((GLuint)shaderIdx, "time");
+				glUniform1f(myUniformLocation, accTime);
+
+				GLint myResLocation = glGetUniformLocation((GLuint)shaderIdx, "resolution");
+				glUniform2f(myResLocation, (float)startParams.Width, (float)startParams.Height);
+
+
+				glRects(-1, -1, 1, 1);
+				SwapBuffers(hDC);
+				elapsedLastFrame = (float)(GetTickCount() - lastFrame) / 1000.0f;
+				accTime += elapsedLastFrame;
+
 				if (!_locked) // Lock need to be called before starting rendering
 					return;
 				for (int iChannel = 0; iChannel < 5; ++iChannel)

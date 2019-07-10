@@ -6,7 +6,7 @@
 
 using namespace Discrepancy;
 
-FragmentShader::FragmentShader() {
+FragmentShader::FragmentShader(GLuint frameBufferName) {
 
 }
 
@@ -18,7 +18,7 @@ int mystrlen(const char *buf)
 	return i;
 }
 
-bool FragmentShader::Load(const char code[]) {
+int FragmentShader::Load(const char code[]) {
 	auto lenshader = mystrlen(code);
 	_shaderCode = (char*)HeapAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY, lenshader + 1);
 	Memory::MemCpy(_shaderCode, code, lenshader + 1);
@@ -42,7 +42,7 @@ bool FragmentShader::Load(const char code[]) {
 		glGetProgramInfoLog(_shaderId, maxLength, &maxLength, &buffer[0]);
 		OutputDebugString("compile program info log");
 		OutputDebugString((char*)buffer);
-		return false;
+		return -1;
 	}
 
 	_programId = glCreateProgram();
@@ -67,16 +67,32 @@ bool FragmentShader::Load(const char code[]) {
 
 		OutputDebugString("link program info log");
 		OutputDebugString((char*)buffer);
-		return false;
+		return -1;
 	}
-	return true;
+
+	_timeLocation = glGetUniformLocation((GLuint)_programId, "time");
+	glUniform1f(_timeLocation, 0.0f);
+
+	_resolutionLocation = glGetUniformLocation((GLuint)_programId, "resolution");
+	glUniform2f(_resolutionLocation, (float)1920, (float)1080); // TODO
+	return _shaderId;
 }
 
 
-void FragmentShader::Render(ShaderParameters parameters) 
+void FragmentShader::Render(ShaderParameters parameters, GLuint renderTexture, GLuint frameBufferName)
 {
 	 // TODO handle parameters passing and texture exchange
 	glUseProgram(_programId);
+
+	glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, renderTexture, 0);
+	glBindFramebuffer(GL_FRAMEBUFFER, frameBufferName);
+
+	// Set the list of draw buffers.
+	GLenum DrawBuffers[1] = { GL_COLOR_ATTACHMENT0 };
+	glDrawBuffers(1, DrawBuffers); // "1" is the size of DrawBuffers
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glRects(-1, -1, 1, 1);
 }
 
 

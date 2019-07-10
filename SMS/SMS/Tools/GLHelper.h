@@ -1,8 +1,10 @@
 #pragma once
 
 #include "MeanLeanWindows.h"
-#include <GL\gl.h>
-#include <gl\glext.h>
+#include <GL/gl.h>
+#include <gl/glext.h>
+#include <gl/glxext.h>
+#include <gl/glcorearb.h>
 #include <MMSystem.h>
 
 
@@ -26,6 +28,19 @@ DECLARE_GL_FUNC(PFNGLATTACHSHADERPROC, glAttachShader);
 DECLARE_GL_FUNC(PFNGLGETPROGRAMIVPROC, glGetProgramiv);
 DECLARE_GL_FUNC(PFNGLUNIFORM2FVPROC, glUniform2fv);
 DECLARE_GL_FUNC(PFNGLUNIFORM1IPROC, glUniform1i);
+
+
+DECLARE_GL_FUNC(PFNGLENABLEPROC, glEnable);
+DECLARE_GL_FUNC(PFNGLGENFRAMEBUFFERSPROC, glGenFramebuffers);
+DECLARE_GL_FUNC(PFNGLBINDFRAMEBUFFERPROC, glBindFramebuffer);
+DECLARE_GL_FUNC(PFNGLGENTEXTURESEXTPROC, glGenTextures);
+DECLARE_GL_FUNC(PFNGLBINDTEXTUREEXTPROC, glBindTexture);
+DECLARE_GL_FUNC(PFNGLTEXIMAGE2DPROC, glTexImage2D);
+DECLARE_GL_FUNC(PFNGLTEXPARAMETERIPROC, glTexParameteri);
+DECLARE_GL_FUNC(PFNGLCHECKFRAMEBUFFERSTATUSPROC, glCheckFramebufferStatus);
+DECLARE_GL_FUNC(PFNGLFRAMEBUFFERTEXTUREPROC, glFramebufferTexture);
+DECLARE_GL_FUNC(PFNGLDRAWBUFFERSPROC, glDrawBuffers);
+
 
 
 int initOpenGL();

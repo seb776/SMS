@@ -1,3 +1,5 @@
+layout(location = 0) out vec3 color;
+
 uniform vec2 resolution;
 uniform float time;
 uniform int pointerCount = 1;
@@ -13,6 +15,8 @@ const vec4 blue = vec4(0.0, 0.0, 1.0, 0.0);
 
 float dotSpacing = 0.007;
 float dotSz = 0.002;
+
+
 
 const float EPS = 0.0001;
 
@@ -276,5 +280,5 @@ void main(void) {
 	uv.x *= ratio;
 
 	vec3 outCol = rdrChroma(uv);
-	gl_FragColor = vec4(outCol, 1.0);
+	color = outCol;
 }

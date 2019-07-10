@@ -24,8 +24,12 @@ public:
 	GLuint _shaderId;
 	GLuint _programId;
 
-	bool Load(const char code[]);
+
+	GLint _timeLocation;
+	GLint _resolutionLocation;
+
+	int Load(const char code[]);
 	
-	void Render(ShaderParameters parameters);
+	void Render(ShaderParameters parameters, GLuint renderTexture, GLuint frameBufferName);
 };
 

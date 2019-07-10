@@ -19,6 +19,7 @@ namespace Discrepancy
 	}
 }
 
+// Ended this as I failed to override global new
 #define NEW(type) new(Memory::HeapAlloc<type>()) type
 
 //void* operator new(size_t sz);

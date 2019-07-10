@@ -25,9 +25,9 @@ void runLoadingScreen(HDC hDC)
 	float accTime = 0.;
 	FragmentShader loadingShader;
 
-	loadingShader.Load(Loading);
+	int shaderIdx = loadingShader.Load(Loading);
 
-	unsigned int shaderIdx = loadingShader.Run();
+	loadingShader.Render(ShaderParameters());
 
 	GLint myTimeLocation = glGetUniformLocation((GLuint)shaderIdx, "time");
 	GLint myResLocation = glGetUniformLocation((GLuint)shaderIdx, "resolution");
@@ -70,6 +70,7 @@ VisualComposition *GenerateVisualCompo()
 	VisualComposition *visualCompo = (decltype(visualCompo))Memory::HeapAlloc(sizeof(*visualCompo));
 
 	visualCompo->Init(5);
+	//glFramebufferTexture()
 
 	auto channelsContent = visualCompo->GetChannelsContent();
 
@@ -85,7 +86,7 @@ VisualComposition *GenerateVisualCompo()
 }
 
 
-void Core::RunOpenGLInWindow(const StartParameters& startParams)
+void TestVisualCompositionRender()
 {
 	VisualComposition *visualCompo = GenerateVisualCompo();
 
@@ -95,6 +96,11 @@ void Core::RunOpenGLInWindow(const StartParameters& startParams)
 		visualCompo->ExecuteComposition(0.f);
 	}
 	Memory::HeapFree(visualCompo);
+}
+
+void Core::RunOpenGLInWindow(const StartParameters& startParams)
+{
+
 	ShowCursor(0);
 	HDC hDC = GetDC(CreateWindowExA(WS_EX_APPWINDOW, "static", 0, startParams.WindowFlags, 0, 0, startParams.Width, startParams.Height, 0, 0, 0, 0));
 	SetPixelFormat(hDC, ChoosePixelFormat(hDC, &pfd), &pfd);
@@ -102,6 +108,11 @@ void Core::RunOpenGLInWindow(const StartParameters& startParams)
 	wglMakeCurrent(hDC, wglCreateContext(hDC));
 
 	initOpenGL();
+
+	glEnable(GL_TEXTURE_2D);
+
+	TestVisualCompositionRender();
+	return;
 
 	Synthesizer::SoundEngine soundEngine;
 	DWORD myThreadID;
@@ -125,9 +136,9 @@ void Core::RunOpenGLInWindow(const StartParameters& startParams)
 
 	FragmentShader fs;
 
-	fs.Load(DebugMathFunction);
+	int shaderIdx = fs.Load(DebugMathFunction);
 
-	unsigned int shaderIdx = fs.Run();
+	fs.Render(ShaderParameters());
 	//unsigned int shaderIdx = overlay.Run();
 
 	Synthesizer::ADSREnvelope envelope = Synthesizer::ADSREnvelope(1.0f, 0.1f, 0.1f, 1.0f, 0.1f, 1.0f, 0.7f);
