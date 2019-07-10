@@ -33,12 +33,17 @@ namespace Discrepancy
 			EVisualFrameType FrameType;
 		public:
 
-			void Render()
+			void Render(unsigned int srcBuffer, unsigned int dstBuffer, float curTime)
 			{
 				switch (FrameType)
 				{
 				case EVisualFrameType::FRAGMENT_SHADER:
-					((FragmentShader *)Content)->Render(0, 0, 0.f, nullptr);
+					ShaderParameters params;
+
+					params.CurrentTime = curTime;
+					params.DestinationTexture = dstBuffer;
+					params.SourceTexture = srcBuffer;
+					((FragmentShader *)Content)->Render(params);
 					break;
 				default:
 					break;
