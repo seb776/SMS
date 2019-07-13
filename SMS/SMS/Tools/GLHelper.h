@@ -3,7 +3,6 @@
 #include "MeanLeanWindows.h"
 #include <GL/gl.h>
 #include <gl/glext.h>
-#include <gl/glxext.h>
 #include <gl/glcorearb.h>
 #include <MMSystem.h>
 

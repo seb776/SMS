@@ -70,21 +70,25 @@ int FragmentShader::Load(const char code[]) {
 		return -1;
 	}
 
-	_timeLocation = glGetUniformLocation((GLuint)_programId, "time");
-	glUniform1f(_timeLocation, 0.0f);
 
-	_resolutionLocation = glGetUniformLocation((GLuint)_programId, "resolution");
-	glUniform2f(_resolutionLocation, (float)1920, (float)1080); // TODO
 	return _shaderId;
 }
 
+void FragmentShader::_passParameters(const ShaderParameters &parameters)
+{
+	_timeLocation = glGetUniformLocation((GLuint)_programId, "time");
+	glUniform1f(_timeLocation, parameters.CurrentTime);
 
-void FragmentShader::Render(ShaderParameters parameters, GLuint renderTexture, GLuint frameBufferName)
+	_resolutionLocation = glGetUniformLocation((GLuint)_programId, "resolution");
+	glUniform2f(_resolutionLocation, (float)1920, (float)1080); // TODO
+}
+
+void FragmentShader::Render(ShaderParameters parameters, GLuint frameBufferName)
 {
 	 // TODO handle parameters passing and texture exchange
 	glUseProgram(_programId);
 
-	glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, renderTexture, 0);
+	glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, parameters.DestinationTexture, 0);
 	glBindFramebuffer(GL_FRAMEBUFFER, frameBufferName);
 
 	// Set the list of draw buffers.
@@ -92,6 +96,10 @@ void FragmentShader::Render(ShaderParameters parameters, GLuint renderTexture, G
 	glDrawBuffers(1, DrawBuffers); // "1" is the size of DrawBuffers
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+	// TODO pass src texture
+	_passParameters(parameters);
+
 	glRects(-1, -1, 1, 1);
 }
 

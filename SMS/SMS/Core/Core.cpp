@@ -75,7 +75,7 @@ VisualComposition *GenerateVisualCompo()
 	auto channelsContent = visualCompo->GetChannelsContent();
 
 	auto shaderLoading = NEW(FragmentShader)();
-	auto frameLoading = NEW(VisualFrame)(shaderLoading, true, false, 0.f, -1.0f);
+	auto frameLoading = NEW(VisualFrame)(shaderLoading, true, false, 0.f, -1.0f, visualCompo->FrameBufferName);
 
 	shaderLoading->Load(Loading);
 
@@ -89,11 +89,19 @@ VisualComposition *GenerateVisualCompo()
 void TestVisualCompositionRender()
 {
 	VisualComposition *visualCompo = GenerateVisualCompo();
+	float accTime = 0.f;
+
+
+
+
 
 	visualCompo->Lock();
 	while (false)
 	{
+		DWORD lastFrame = GetTickCount();
 		visualCompo->ExecuteComposition(0.f);
+		float elapsedLastFrame = (float)(GetTickCount() - lastFrame) / 1000.0f;
+		accTime += elapsedLastFrame;
 	}
 	Memory::HeapFree(visualCompo);
 }
@@ -124,7 +132,7 @@ void Core::RunOpenGLInWindow(const StartParameters& startParams)
 
 	runLoadingScreen(hDC);
 
-	
+
 
 
 

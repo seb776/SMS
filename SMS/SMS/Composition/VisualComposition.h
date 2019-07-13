@@ -23,10 +23,6 @@ namespace Discrepancy
 		class VisualFrame
 		{
 		public:
-
-			bool ManualEnd; // ignores EndTime and take a callback insted to set a bool
-			bool HasEnded;
-
 			float StartTime;
 			float EndTime;
 			void  *Content;
@@ -35,7 +31,7 @@ namespace Discrepancy
 			GLuint _renderTexture;
 		public:
 
-			void Render(unsigned int srcBuffer, unsigned int dstBuffer, float curTime)
+			void Render(GLuint srcBuffer, GLuint dstBuffer, float curTime)
 			{
 				switch (FrameType)
 				{
@@ -46,7 +42,7 @@ namespace Discrepancy
 					params.DestinationTexture = dstBuffer;
 					params.SourceTexture = srcBuffer;
 
-					((FragmentShader *)Content)->Render(params, _renderTexture, _frameBuffer);
+					((FragmentShader *)Content)->Render(params, _frameBuffer);
 					break;
 				default:
 					break;
@@ -56,8 +52,7 @@ namespace Discrepancy
 			VisualFrame() = delete;
 
 			template <typename T>
-			VisualFrame(T content, bool manualEnd, bool hasEnded, float startTime, float endTime, GLuint frameBuffer) :
-				ManualEnd(manualEnd), HasEnded(hasEnded),
+			VisualFrame(T content, float startTime, float endTime, GLuint frameBuffer) :
 				StartTime(startTime), EndTime(endTime),
 				Content(content),
 				_frameBuffer(frameBuffer), _renderTexture(0U)
@@ -89,11 +84,14 @@ namespace Discrepancy
 
 		class VisualComposition
 		{
+		private:
 			unsigned int _channelsCount;
 			VisualChannel *_channelsContent;
 			bool _locked;
 
 		public:
+			GLuint FrameBufferName;
+
 			void Init(unsigned int channelsCount)
 			{
 				_channelsContent = (decltype(_channelsContent))Memory::HeapAlloc(channelsCount * sizeof(*_channelsContent));
@@ -127,6 +125,7 @@ namespace Discrepancy
 				_channelsContent(nullptr),
 				_locked(false)
 			{
+				FrameBufferName = 0U;
 				Init(channelsCount);
 			}
 
@@ -140,23 +139,9 @@ namespace Discrepancy
 
 			void ExecuteComposition(float curTime)
 			{
-				DWORD lastFrame = GetTickCount();
-
-				GLint myUniformLocation = glGetUniformLocation((GLuint)shaderIdx, "time");
-				glUniform1f(myUniformLocation, accTime);
-
-				GLint myResLocation = glGetUniformLocation((GLuint)shaderIdx, "resolution");
-				glUniform2f(myResLocation, (float)startParams.Width, (float)startParams.Height);
-
-
-				glRects(-1, -1, 1, 1);
-				SwapBuffers(hDC);
-				elapsedLastFrame = (float)(GetTickCount() - lastFrame) / 1000.0f;
-				accTime += elapsedLastFrame;
-
 				if (!_locked) // Lock need to be called before starting rendering
 					return;
-				for (int iChannel = 0; iChannel < 5; ++iChannel)
+				for (int iChannel = 0; iChannel < 5; ++iChannel) // TODO fixed channels count
 				{
 					const auto &headPtr = _channelsContent[iChannel].Frames.Head();
 					if (headPtr == nullptr)
@@ -166,13 +151,12 @@ namespace Discrepancy
 					bool hasEnded = curTime > headFrame->EndTime;
 					if (curTime > headFrame->StartTime && !hasEnded)
 					{
-						headFrame->Render(iChannel - 1, iChannel, curTime);
+						headFrame->Render(iChannel - 1, iChannel, curTime); // TODO curFrameTime = (curTime - headFrame->StartTime)
 					}
 					else if (hasEnded)
 					{
 						_channelsContent[iChannel].Frames.Pop();
 					}
-
 				}
 			}
 		};

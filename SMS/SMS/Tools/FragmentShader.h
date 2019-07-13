@@ -30,6 +30,9 @@ public:
 
 	int Load(const char code[]);
 	
-	void Render(ShaderParameters parameters, GLuint renderTexture, GLuint frameBufferName);
+	void Render(ShaderParameters parameters, GLuint frameBufferName);
+
+private:
+	void _passParameters(const ShaderParameters &parameters);
 };
 
