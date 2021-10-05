@@ -92,7 +92,7 @@ void Core::RunOpenGLInWindow(const StartParameters& startParams)
 
 	FragmentShader fs;
 
-	fs.Load(DebugMathFunction);
+	fs.Load(Pharma);
 
 	unsigned int shaderIdx = fs.Run();
 	//unsigned int shaderIdx = overlay.Run();

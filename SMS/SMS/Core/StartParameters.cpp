@@ -15,8 +15,8 @@ Core::StartParameters Core::GetStartParameters(bool fromUI, LPSTR lpCmdLine, int
 	auto startParams = StartParameters();
 
 	startParams.FramePerSecond = 60.0f;
-	startParams.Width = 1920U;
-	startParams.Height = 1080U;
+	startParams.Width = 1536U;
+	startParams.Height = 864U;
 
 	startParams.WindowFlags = GL_WINDOWFLAGS;
 	return startParams;
