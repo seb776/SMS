@@ -23,11 +23,11 @@ static float g_height = 0.;
 void runLoadingScreen(HDC hDC)
 {
 	float accTime = 0.;
-	FragmentShader loadingShader;
+	FragmentShader loadingShader(0);
 
 	int shaderIdx = loadingShader.Load(Loading);
 
-	loadingShader.Render(ShaderParameters());
+	loadingShader.Render(ShaderParameters(), 0);
 
 	GLint myTimeLocation = glGetUniformLocation((GLuint)shaderIdx, "time");
 	GLint myResLocation = glGetUniformLocation((GLuint)shaderIdx, "resolution");
@@ -74,8 +74,8 @@ VisualComposition *GenerateVisualCompo()
 
 	auto channelsContent = visualCompo->GetChannelsContent();
 
-	auto shaderLoading = NEW(FragmentShader)();
-	auto frameLoading = NEW(VisualFrame)(shaderLoading, true, false, 0.f, -1.0f, visualCompo->FrameBufferName);
+	auto shaderLoading = NEW(FragmentShader)(0);
+	auto frameLoading = NEW(VisualFrame)(shaderLoading, 0.f, -1.0f, visualCompo->FrameBufferName);
 
 	shaderLoading->Load(Loading);
 
@@ -119,8 +119,8 @@ void Core::RunOpenGLInWindow(const StartParameters& startParams)
 
 	glEnable(GL_TEXTURE_2D);
 
-	TestVisualCompositionRender();
-	return;
+	//TestVisualCompositionRender();
+	//return;
 
 	Synthesizer::SoundEngine soundEngine;
 	DWORD myThreadID;
@@ -133,20 +133,17 @@ void Core::RunOpenGLInWindow(const StartParameters& startParams)
 	runLoadingScreen(hDC);
 
 
-
-
-
 	soundEngine.Play();
 
-	FragmentShader overlay;
+	FragmentShader overlay(0);
 
 	overlay.Load(TestOverlay);
 
-	FragmentShader fs;
+	FragmentShader fs(0);
 
 	int shaderIdx = fs.Load(DebugMathFunction);
 
-	fs.Render(ShaderParameters());
+	fs.Render(ShaderParameters(), 0);
 	//unsigned int shaderIdx = overlay.Run();
 
 	Synthesizer::ADSREnvelope envelope = Synthesizer::ADSREnvelope(1.0f, 0.1f, 0.1f, 1.0f, 0.1f, 1.0f, 0.7f);

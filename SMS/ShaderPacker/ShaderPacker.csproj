@@ -49,5 +49,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ShaderMinifier\ShaderMinifier.csproj">
+      <Project>{9f0ed96a-04d6-4da0-86f6-1d09939d2ea0}</Project>
+      <Name>ShaderMinifier</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

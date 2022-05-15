@@ -71,14 +71,13 @@ int FragmentShader::Load(const char code[]) {
 	}
 
 
-	return _shaderId;
+	return _programId;
 }
 
 void FragmentShader::_passParameters(const ShaderParameters &parameters)
 {
 	_timeLocation = glGetUniformLocation((GLuint)_programId, "time");
 	glUniform1f(_timeLocation, parameters.CurrentTime);
-
 	_resolutionLocation = glGetUniformLocation((GLuint)_programId, "resolution");
 	glUniform2f(_resolutionLocation, (float)1920, (float)1080); // TODO
 }

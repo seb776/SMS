@@ -18,7 +18,7 @@ class FragmentShader
 private:
 	char *_shaderCode;
 public:
-	FragmentShader();
+	FragmentShader(GLuint framebuffer);
 	~FragmentShader();
 
 	GLuint _shaderId;

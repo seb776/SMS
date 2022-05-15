@@ -27,8 +27,33 @@ namespace ShaderPacker
 
         }
 
+        public static void MinifyTest(string inputFile, string outputFile)
+        {
+            var minShader = ShaderMinifier.ShaderMinifierAPI.Minify(File.ReadAllText(inputFile));
+
+            File.WriteAllText(outputFile, minShader);
+        }
+
         static void Main(string[] args)
         {
+            /*
+            var filesmin = new string[]
+            {
+                @"E:\z0rg\Projects\SMS\SMS\SMS\Shaders\DebugMathFunction.glsl",
+                @"E:\z0rg\Projects\SMS\SMS\SMS\Shaders\Loading.glsl",
+                @"E:\z0rg\Projects\SMS\SMS\SMS\Shaders\Pharma.glsl",
+                @"E:\z0rg\Projects\SMS\SMS\SMS\Shaders\RetroReflect.glsl",
+                @"E:\z0rg\Projects\SMS\SMS\SMS\Shaders\Shader2.glsl"
+            };
+
+            foreach(var file in filesmin)
+            {
+                MinifyTest(file, file + ".min");
+
+            }
+            return;
+            */
+
             Console.WriteLine("Packing shaders...");
             if (args.Count() < 3)
             {
